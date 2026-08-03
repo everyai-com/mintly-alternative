@@ -1,0 +1,32 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[functions]
+  directory = "netlify/functions"
+
+[template.environment]
+  AI_PROVIDER = "openrouter"
+  AI_MODEL = "openai/gpt-4o-mini"
+  AI_API_KEY = "Add a server-side provider API key"
+  AI_BASE_URL = "Optional custom OpenAI-compatible base URL"
+  ALLOW_CUSTOM_ENDPOINTS = "Set true only on a trusted private deployment"
+  GITHUB_APP_SLUG = "Optional public GitHub App slug"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

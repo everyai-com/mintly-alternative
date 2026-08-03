@@ -1,0 +1,16 @@
+{
+  "name": "vessel-agent-docs",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-07-22",
+  "vars": {
+    "AI_PROVIDER": "openrouter",
+    "AI_MODEL": "openai/gpt-4o-mini",
+    "VESSEL_SITE_NAME": "Vessel",
+    "ALLOW_CUSTOM_ENDPOINTS": "false"
+  },
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application"
+  }
+}
