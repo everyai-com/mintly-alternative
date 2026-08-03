@@ -1,0 +1,61 @@
+# Vessel
+
+> Vessel is an open-source, self-hostable documentation maker for product teams building APIs, SDKs, and AI agents. It keeps one Git-backed source of truth and compiles that source into human documentation, machine-readable context, and a protocol surface for agent runtimes.
+
+## What Vessel is
+
+Vessel is designed around the idea that documentation is now an interface. A human needs navigation, examples, and clear explanations. An AI agent needs structured discovery, concise context, precise constraints, and permission-aware actions. Vessel treats both as outputs of the same source rather than separate documents that drift apart.
+
+The project is intentionally static-first. A docs build can be hosted on a CDN, a server, an object store, Cloudflare Workers, or Netlify. An optional edge gateway can expose health checks and a future MCP endpoint without forcing a hosted control plane or a required account.
+
+## Generated surfaces
+
+Human docs are a readable, searchable web experience for guides, concepts, API reference, examples, and changelogs.
+
+The agent index is a concise Markdown overview at /llms.txt plus a complete context export at /llms-full.txt. Each link should point to a source page with enough description for an agent to choose the right context.
+
+The MCP gateway is intended to expose read-only resources and typed tools first. A typical initial surface includes search_docs, get_page, and list_examples. Mutating actions should be added only with an explicit permission model and a human approval path.
+
+Repo-native agent artifacts such as AGENTS.md and SKILL.md can live beside the code they explain. This keeps instructions versioned, reviewable, and close to the implementation they constrain.
+
+## Project principles
+
+1. Git is the source of truth.
+2. Humans and agents should receive linked, grounded context.
+3. Self-hosting should be a real path, not an export afterthought.
+4. Read-only agent access comes before automation.
+5. Provider-specific deployment should remain optional.
+
+## Current demo
+
+The current front-end is a polished product surface demonstrating the complete platform shape: the three generated views, an editor, API playground, Assistant, BYOK provider settings, maintenance audit queue, insights, release controls, agent query interaction, GitHub connection path, open-source positioning, and live one-click deployment paths. The shared assistant adapter and same-origin gateway are scaffolded for Cloudflare Workers and Netlify Functions; the maintenance scheduler, source/support adapters, hybrid editor, API linter, governance service, full documentation compiler, authentication service, analytics backend, retrieval index, and MCP implementation are still being built.
+
+## AI Assistant
+
+The Assistant accepts OpenRouter, OpenAI, Anthropic, and custom OpenAI-compatible configurations. A key entered in the browser demo is kept in memory for the current tab and is sent only to the same-origin `/api/assistant` route when the user asks for a live answer. Production deployments should set `AI_API_KEY` or provider-specific secrets on the Worker/Function instead. The adapter never returns or logs a key.
+
+The Assistant uses documentation context as a separate input from the model provider. This makes model switching, self-hosting, and future MCP-backed retrieval independent concerns.
+
+## Maintenance layer
+
+Vessel is designed for documentation that stays true after launch. A maintenance service will compare pages with source code, OpenAPI/AsyncAPI and GraphQL contracts, product changes, screenshots, and scheduled semantic checks. It will explain the signal, show affected pages, suggest a patch, and open a reviewable PR rather than silently publishing generated text.
+
+Support intelligence will cluster unanswered or repeated questions from systems such as Intercom, Zendesk, Help Scout, and Crisp into ranked documentation gaps. Teams can turn a cluster into a draft article, link the draft back to support, and measure search success, support deflection, endpoint usage, and agent confidence.
+
+The intended ownership workflow combines MDX and Git with a safe visual editor, inline comments, bidirectional sync, previews, approval stages, version diffs, and audit logs. The same source can publish public developer docs, a customer help center, and private internal knowledge, with an embedded widget for in-product help.
+
+The broader maintenance roadmap includes API design-first workflows and style linting for OpenAPI, AsyncAPI, and GraphQL; browser-generated screenshots and visual QA; localization; migration-safe SEO redirects; and integrations for GitHub/GitLab, Slack, webhooks, support tools, and browser workflows. These capabilities are represented in the product preview and feature map, but their backend services are not yet production-ready.
+
+## Platform parity map
+
+Vessel is intentionally targeting the feature categories users expect from a modern docs platform: MDX and components, themes, navigation and versions, OpenAPI/AsyncAPI references and playgrounds, Assistant answers with citations, agent workflows, authentication and access rules, search and feedback analytics, changelogs, webhooks, integrations, CI checks, and portable deployment. The implementation status for each category is tracked in `FEATURES.md`.
+
+## Intended next steps
+
+- Parse a docs directory and generate a typed navigation tree.
+- Render MDX components, themes, versions, locales, and custom domains.
+- Generate API pages and an interactive OpenAPI/AsyncAPI playground.
+- Generate llms.txt, llms-full.txt, sitemap metadata, and a real MCP endpoint.
+- Add preview deployments, editor checks, redirects, changelogs, and webhooks.
+- Add Assistant retrieval, citations, feedback, search analytics, and agent telemetry.
+- Add auth, page-level access, integrations, and the research-to-PR agent workflow.

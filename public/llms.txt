@@ -1,0 +1,28 @@
+# Vessel
+
+> Vessel is an open-source, Git-backed documentation layer for humans and AI agents. It turns Markdown and OpenAPI into a readable docs site, compact agent indexes, and an MCP-ready surface that teams can self-host.
+
+## Product
+
+- [Platform overview](/#platform): One source that compiles to human docs, llms.txt, and MCP surfaces.
+- [Agent layer](/#agent-layer): Repo-native instructions, typed tools, runnable examples, and feedback loops.
+- [AI Assistant](/#assistant-studio): Bring OpenRouter, OpenAI, Anthropic, or a custom OpenAI-compatible key to a private assistant gateway.
+- [Maintenance](/#maintenance): Detect code, product, support, visual, and semantic drift; explain changes; and hold generated patches for review.
+- [Deployment](/#deploy): Deploy with Cloudflare Workers, Netlify, or any static host.
+- [Source and setup](/#source): Open-source project direction and starter command.
+
+## Concepts
+
+- [Human docs](/#demo): Searchable, readable documentation for people.
+- [Agent index](/#demo): A concise llms.txt map and a full context export for smaller context windows.
+- [MCP gateway](/#demo): Discoverable resources and safe, typed tools for MCP clients.
+- [Git-first workflow](/#agent-layer): Markdown, OpenAPI, examples, and agent instructions reviewed together.
+- [Knowledge operations](/#maintenance): Hybrid Git/visual editing, support-gap mining, API contract linting, approvals, and audit history.
+- [Knowledge surfaces](/#maintenance): Public docs, customer help center, private wiki, and embedded help can share one indexed source.
+- [GitHub connection](/github): One-click providers can clone the public GitHub source; an optional GitHub App can scope repository sync.
+
+## Deployment
+
+- [Cloudflare Workers deployment](/#deploy): Use the live Deploy to Cloudflare button for `everyai-com/mintly-alternative`.
+- [Netlify deployment](/#deploy): Use the live Netlify deploy button or connect the repository for continuous deploys.
+- [Self-hosted build](/#deploy): Run npm run build and serve the generated dist directory.

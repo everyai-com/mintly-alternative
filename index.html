@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5f7f1" />
+    <meta
+      name="description"
+      content="Vessel is the open-source documentation layer for humans and AI agents."
+    />
+    <meta property="og:title" content="Vessel — docs agents can actually use" />
+    <meta
+      property="og:description"
+      content="One git-backed source for beautiful docs, llms.txt, and an MCP-ready agent surface."
+    />
+    <title>Vessel — docs agents can actually use</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='10' fill='%23131c20'/%3E%3Ccircle cx='11' cy='11' r='4' fill='%23d8ff4f'/%3E%3Ccircle cx='21' cy='11' r='4' fill='%23d8ff4f'/%3E%3Ccircle cx='11' cy='21' r='4' fill='%23d8ff4f'/%3E%3Cpath d='M15 11h2M11 15v2M15 21h2M21 15v2' stroke='%23d8ff4f' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="/src/styles.css" />
+  </head>
+  <body>
+    <div class="site-shell">
+      <div class="announcement">
+        <span class="announcement__pulse"></span>
+        <span>Vessel is open source</span>
+        <span class="announcement__divider"></span>
+        <a href="#source">Read the build notes <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="brand" href="#top" aria-label="Vessel home">
+            <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+              <rect x="1" y="1" width="30" height="30" rx="10" fill="currentColor" />
+              <circle cx="11" cy="11" r="3.2" fill="#d8ff4f" />
+              <circle cx="21" cy="11" r="3.2" fill="#d8ff4f" />
+              <circle cx="11" cy="21" r="3.2" fill="#d8ff4f" />
+              <path d="M14.6 11h2.8M11 14.6v2.8M14.6 21h2.8M21 14.6v2.8" stroke="#d8ff4f" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <span>Vessel</span>
+          </a>
+
+          <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="site-nav">
+            <span></span>
+            <span></span>
+          </button>
+
+          <nav class="site-nav" id="site-nav" aria-label="Primary navigation">
+            <a href="#suite">Platform</a>
+            <a href="#assistant-studio">Assistant</a>
+            <a href="#agent-layer">Agent layer</a>
+            <a href="#deploy">Deploy</a>
+            <a href="#source">Source</a>
+          </nav>
+
+          <div class="header-actions">
+            <a class="header-link" href="https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+            <a class="button button--small button--dark" href="#demo">Try the demo <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </header>
+
+      <main id="top">
+        <section class="hero section-pad">
+          <div class="hero__copy">
+            <div class="eyebrow"><span class="eyebrow__dot"></span> Open-source docs infrastructure</div>
+            <h1>Give every agent the context to <em>get it right.</em></h1>
+            <p class="hero__lede">
+              Vessel turns your markdown and OpenAPI into a docs site people love, a compact context index agents can parse, and an MCP surface you own.
+            </p>
+            <div class="hero__actions">
+              <a class="button button--primary" href="#demo">Explore the agent view <span aria-hidden="true">→</span></a>
+              <a class="button button--ghost" href="#deploy">Deploy it yourself <span aria-hidden="true">↗</span></a>
+            </div>
+            <div class="hero__meta">
+              <div class="avatar-stack" aria-hidden="true">
+                <span>AR</span>
+                <span>MK</span>
+                <span>JL</span>
+                <span class="avatar-stack__more">+</span>
+              </div>
+              <span>For teams building the next interface</span>
+            </div>
+          </div>
+
+          <div class="hero__visual" aria-label="Vessel agent documentation preview">
+            <div class="visual-glow visual-glow--one"></div>
+            <div class="visual-glow visual-glow--two"></div>
+            <div class="hero-card">
+              <div class="hero-card__top">
+                <div class="window-dots"><span></span><span></span><span></span></div>
+                <span class="hero-card__path">vessel / gateway</span>
+                <span class="status-pill"><span></span> live</span>
+              </div>
+              <div class="hero-card__body">
+                <div class="hero-card__prompt">
+                  <span class="prompt-label">AGENT QUERY</span>
+                  <p>How do I create a checkout session?</p>
+                </div>
+                <div class="hero-card__response">
+                  <div class="response-heading">
+                    <span class="response-icon">✦</span>
+                    <span>Relevant context found</span>
+                    <span class="response-score">0.98</span>
+                  </div>
+                  <div class="response-code">
+                    <div><span class="code-method">POST</span><span>/v1/checkout</span></div>
+                    <div class="code-comment"># Create a hosted checkout session</div>
+                  </div>
+                  <div class="response-tags">
+                    <span>API reference</span>
+                    <span>Quickstart</span>
+                    <span>SDK / Node</span>
+                  </div>
+                </div>
+              </div>
+              <div class="hero-card__foot">
+                <span>one source</span>
+                <div class="surface-dots"><span></span><span></span><span></span></div>
+                <span>three surfaces</span>
+              </div>
+            </div>
+            <div class="hero-float hero-float--top">
+              <span class="mini-icon mini-icon--lime">⌁</span>
+              <span><strong>llms.txt</strong><small>generated</small></span>
+              <span class="float-check">✓</span>
+            </div>
+            <div class="hero-float hero-float--bottom">
+              <span class="mini-icon mini-icon--blue">⌘</span>
+              <span><strong>MCP server</strong><small>connected</small></span>
+              <span class="float-signal"><i></i><i></i><i></i></span>
+            </div>
+          </div>
+        </section>
+
+        <div class="signal-strip" aria-label="Vessel capabilities">
+          <span>Markdown-first</span>
+          <i></i>
+          <span>Agent-readable</span>
+          <i></i>
+          <span>API-native</span>
+          <i></i>
+          <span>Self-hosted</span>
+          <i></i>
+          <span>Built in public</span>
+        </div>
+
+        <section class="section-pad platform-section" id="platform">
+          <div class="section-intro">
+            <div class="eyebrow"><span class="eyebrow__dot"></span> One source. Three surfaces.</div>
+            <h2>Documentation is an interface now.</h2>
+            <p>Write once in the repo your team already trusts. Vessel makes that context legible to people, coding agents, and any MCP client.</p>
+          </div>
+
+          <div class="surface-layout" id="demo">
+            <div class="surface-menu">
+              <div class="surface-menu__label">Choose a surface</div>
+              <button class="surface-tab is-active" type="button" data-surface="human" aria-selected="true">
+                <span class="surface-tab__number">01</span>
+                <span><strong>Human docs</strong><small>Readable, searchable, fast</small></span>
+                <span class="surface-tab__arrow">↗</span>
+              </button>
+              <button class="surface-tab" type="button" data-surface="index" aria-selected="false">
+                <span class="surface-tab__number">02</span>
+                <span><strong>Agent index</strong><small>llms.txt + full context</small></span>
+                <span class="surface-tab__arrow">↗</span>
+              </button>
+              <button class="surface-tab" type="button" data-surface="mcp" aria-selected="false">
+                <span class="surface-tab__number">03</span>
+                <span><strong>MCP gateway</strong><small>Tools and resources</small></span>
+                <span class="surface-tab__arrow">↗</span>
+              </button>
+              <div class="surface-menu__note">
+                <span class="note-mark">✦</span>
+                <p>Every generated surface links back to the same source page, so answers stay grounded and changes stay reviewable.</p>
+              </div>
+            </div>
+
+            <div class="surface-demo" id="surface-demo" aria-live="polite"></div>
+          </div>
+        </section>
+
+        <section class="suite-section section-pad" id="suite">
+          <div class="section-intro section-intro--suite">
+            <div>
+              <div class="eyebrow"><span class="eyebrow__dot"></span> The complete docs platform</div>
+              <h2>Everything your docs need. Nothing you cannot own.</h2>
+            </div>
+            <p>Vessel covers the polished product surface teams expect from a modern docs platform, then adds a portable agent layer on top. Click through the control room to see the shape of the system.</p>
+          </div>
+
+          <div class="suite-control-room">
+            <div class="suite-menu" role="tablist" aria-label="Vessel platform surfaces">
+              <div class="suite-menu__label">Explore the suite</div>
+              <button class="suite-tab is-active" type="button" role="tab" data-suite="editor" aria-selected="true" aria-controls="suite-preview">
+                <span class="suite-tab__number">01</span>
+                <span><strong>Editor &amp; content</strong><small>MDX, components, AI fixes</small></span>
+                <span class="suite-tab__arrow">↗</span>
+              </button>
+              <button class="suite-tab" type="button" role="tab" data-suite="api" aria-selected="false" aria-controls="suite-preview">
+                <span class="suite-tab__number">02</span>
+                <span><strong>API playground</strong><small>OpenAPI, AsyncAPI, examples</small></span>
+                <span class="suite-tab__arrow">↗</span>
+              </button>
+              <button class="suite-tab" type="button" role="tab" data-suite="assistant" aria-selected="false" aria-controls="suite-preview">
+                <span class="suite-tab__number">03</span>
+                <span><strong>Assistant &amp; agent</strong><small>Cited answers, PR-ready work</small></span>
+                <span class="suite-tab__arrow">↗</span>
+              </button>
+              <button class="suite-tab" type="button" role="tab" data-suite="insights" aria-selected="false" aria-controls="suite-preview">
+                <span class="suite-tab__number">04</span>
+                <span><strong>Insights &amp; feedback</strong><small>Search gaps, confidence, actions</small></span>
+                <span class="suite-tab__arrow">↗</span>
+              </button>
+              <button class="suite-tab" type="button" role="tab" data-suite="release" aria-selected="false" aria-controls="suite-preview">
+                <span class="suite-tab__number">05</span>
+                <span><strong>Release &amp; control</strong><small>Versions, auth, webhooks</small></span>
+                <span class="suite-tab__arrow">↗</span>
+              </button>
+            </div>
+
+            <div class="suite-preview" id="suite-preview" role="tabpanel" aria-live="polite"></div>
+          </div>
+
+          <div class="suite-capabilities" aria-label="Platform capabilities">
+            <article class="suite-capability suite-capability--lime">
+              <span class="suite-capability__icon">⌘</span>
+              <div><strong>MDX + components</strong><p>Tabs, code groups, steps, callouts, cards, diagrams, and custom themes.</p></div>
+            </article>
+            <article class="suite-capability suite-capability--blue">
+              <span class="suite-capability__icon">↗</span>
+              <div><strong>OpenAPI + AsyncAPI</strong><p>Generate reference pages, interactive requests, schemas, and language examples.</p></div>
+            </article>
+            <article class="suite-capability suite-capability--cream">
+              <span class="suite-capability__icon">☷</span>
+              <div><strong>Navigation + locales</strong><p>Groups, tabs, menus, versions, breadcrumbs, redirects, and localization.</p></div>
+            </article>
+            <article class="suite-capability suite-capability--coral">
+              <span class="suite-capability__icon">✦</span>
+              <div><strong>Assistant + agent mode</strong><p>Grounded answers for readers and a research-to-PR workflow for builders.</p></div>
+            </article>
+            <article class="suite-capability suite-capability--outline">
+              <span class="suite-capability__icon">⌕</span>
+              <div><strong>Search + analytics</strong><p>Popular pages, low-confidence searches, reactions, and agent comprehension.</p></div>
+            </article>
+            <article class="suite-capability suite-capability--outline">
+              <span class="suite-capability__icon">◌</span>
+              <div><strong>Auth + governance</strong><p>JWT, OAuth, password gates, SSO-ready roles, and page-level access.</p></div>
+            </article>
+            <article class="suite-capability suite-capability--outline">
+              <span class="suite-capability__icon">↺</span>
+              <div><strong>Changelog + updates</strong><p>Tagged releases, RSS, announcements, and a history your users can follow.</p></div>
+            </article>
+            <article class="suite-capability suite-capability--outline">
+              <span class="suite-capability__icon">⌁</span>
+              <div><strong>Integrations + APIs</strong><p>Git previews, Slack, webhooks, admin APIs, MCP, and portable deployments.</p></div>
+            </article>
+          </div>
+
+          <div class="suite-config">
+            <div class="suite-config__copy">
+              <span class="suite-config__label">One config. Every surface.</span>
+              <h3>Keep the contract close to the code.</h3>
+              <p>Navigation, versions, API sources, auth rules, and agent outputs stay reviewable in Git. Hosted convenience is optional; ownership is not.</p>
+            </div>
+            <pre class="suite-config__code"><span class="config-key">navigation</span>:
+  <span class="config-key">tabs</span>: [Guides, API reference, Changelog]
+  <span class="config-key">versions</span>: [v2, v1]
+<span class="config-key">outputs</span>:
+  <span class="config-key">human</span>: <span class="config-value">true</span>
+  <span class="config-key">llms</span>: <span class="config-value">true</span>
+  <span class="config-key">mcp</span>: <span class="config-value">read-only</span></pre>
+          </div>
+
+          <a class="suite-link" href="#platform">See the three generated surfaces <span aria-hidden="true">↓</span></a>
+        </section>
+
+        <section class="assistant-studio-section section-pad" id="assistant-studio">
+          <div class="assistant-studio__intro">
+            <div>
+              <div class="eyebrow"><span class="eyebrow__dot"></span> AI assistant / bring your own key</div>
+              <h2>Your docs. Your model. Your budget.</h2>
+            </div>
+            <div class="assistant-studio__intro-side">
+              <p>Use OpenRouter, OpenAI, Anthropic, or any trusted OpenAI-compatible endpoint. Vessel keeps the retrieval context and the provider choice separate, so you can switch models without rewriting your docs.</p>
+              <span class="assistant-studio__trust"><i></i> no shared API key in the starter</span>
+            </div>
+          </div>
+
+          <div class="assistant-studio__layout">
+            <div class="assistant-console">
+              <div class="assistant-console__top">
+                <div class="window-dots"><span></span><span></span><span></span></div>
+                <span class="assistant-console__path">vessel / assistant / grounded answer</span>
+                <span class="assistant-console__mode"><i></i> BYOK ready</span>
+              </div>
+              <div class="assistant-console__body">
+                <div class="assistant-message assistant-message--user">How do I rotate a production key without breaking active clients?</div>
+                <div class="assistant-answer-panel" id="assistant-demo-answer">
+                  <div class="assistant-answer-panel__heading"><span>✦</span><strong>Vessel Assistant</strong><span class="assistant-answer-panel__score">0.96 grounded</span></div>
+                  <p>Create a second key, deploy it alongside the current key, move traffic, then revoke the old key after the grace period. Never print the secret in logs or docs.</p>
+                  <div class="assistant-answer-panel__steps"><span>01</span> Create <i></i><span>02</span> Deploy <i></i><span>03</span> Revoke</div>
+                </div>
+                <div class="assistant-source-list"><span>Security guide ↗</span><span>Authentication ↗</span><span>Rotation runbook ↗</span></div>
+                <form class="assistant-composer" id="assistant-demo-form">
+                  <label for="assistant-prompt">Ask your docs</label>
+                  <div class="assistant-composer__input">
+                    <input id="assistant-prompt" name="prompt" value="How do I handle a failed payment?" autocomplete="off" />
+                    <button type="submit">Ask <span aria-hidden="true">↵</span></button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div class="assistant-settings-card">
+              <div class="assistant-settings-card__top">
+                <div><span class="assistant-settings-card__label">Provider settings</span><h3>Bring your own key.</h3></div>
+                <span class="assistant-settings-card__status" id="assistant-key-status"><i></i> not connected</span>
+              </div>
+              <form id="assistant-settings-form">
+                <div class="provider-picker" role="tablist" aria-label="AI providers">
+                  <button class="provider-tab is-active" type="button" role="tab" data-provider="openrouter" aria-selected="true"><span class="provider-logo provider-logo--router">↗</span>OpenRouter</button>
+                  <button class="provider-tab" type="button" role="tab" data-provider="openai" aria-selected="false"><span class="provider-logo provider-logo--openai">◌</span>OpenAI</button>
+                  <button class="provider-tab" type="button" role="tab" data-provider="anthropic" aria-selected="false"><span class="provider-logo provider-logo--anthropic">A</span>Anthropic</button>
+                  <button class="provider-tab" type="button" role="tab" data-provider="custom" aria-selected="false"><span class="provider-logo provider-logo--custom">⌁</span>Custom</button>
+                </div>
+
+                <label class="assistant-field" for="assistant-key"><span>Provider API key</span><small>session-only preview</small>
+                  <div class="assistant-key-input"><input id="assistant-key" type="password" placeholder="sk-or-v1-••••••••" autocomplete="off" spellcheck="false" /><button type="button" data-toggle-secret>Show</button></div>
+                </label>
+
+                <div class="assistant-field-grid">
+                  <label class="assistant-field" for="assistant-model"><span>Model</span>
+                    <select id="assistant-model"><option value="openai/gpt-4o-mini">openai/gpt-4o-mini</option><option value="anthropic/claude-3.5-sonnet">anthropic/claude-3.5-sonnet</option><option value="google/gemini-2.5-flash">google/gemini-2.5-flash</option></select>
+                  </label>
+                  <label class="assistant-field" for="assistant-max-tokens"><span>Max tokens</span>
+                    <select id="assistant-max-tokens"><option value="900">900</option><option value="1400">1,400</option><option value="2000">2,000</option></select>
+                  </label>
+                </div>
+
+                <label class="assistant-field assistant-field--endpoint" for="assistant-base-url"><span>Endpoint <small>(custom only)</small></span>
+                  <input id="assistant-base-url" value="https://openrouter.ai/api/v1" autocomplete="off" spellcheck="false" />
+                </label>
+
+                <div class="assistant-settings-card__actions"><button class="button button--primary" type="submit">Use this provider <span aria-hidden="true">→</span></button><span>Keys never enter analytics.</span></div>
+              </form>
+
+              <div class="assistant-security-note"><span>⌁</span><p><strong>Private by default.</strong> Production keys belong in Worker secrets or Netlify environment variables. The demo only holds a key in memory until this tab closes.</p></div>
+              <div class="assistant-github-card"><div><span class="assistant-github-card__label">Git source</span><strong>Connect repositories with GitHub.</strong></div><a href="/api/github/install">Set up the GitHub App <span aria-hidden="true">↗</span></a></div>
+            </div>
+          </div>
+
+          <div class="assistant-provider-row"><span class="assistant-provider-row__label">Provider adapters</span><span>OpenAI-compatible</span><i></i><span>OpenRouter routing</span><i></i><span>Anthropic native</span><i></i><span>Self-hosted endpoints</span></div>
+        </section>
+
+        <section class="maintenance-section section-pad" id="maintenance">
+          <div class="maintenance-head">
+            <div>
+              <div class="eyebrow"><span class="eyebrow__dot"></span> Documentation maintenance</div>
+              <h2>Keep docs true after launch.</h2>
+            </div>
+            <p>Beautiful pages are the starting point. Vessel watches product signals, support questions, API contracts, and screenshots so stale content becomes a reviewable change instead of a surprise.</p>
+          </div>
+
+          <div class="maintenance-board">
+            <div class="maintenance-radar">
+              <div class="maintenance-radar__top"><span>vessel / maintenance / audit</span><span class="maintenance-radar__live"><i></i> scanning</span></div>
+              <div class="maintenance-radar__metric"><strong>12</strong><span>signals resolved before publish</span><em>+28% this month</em></div>
+              <div class="maintenance-tabs" role="tablist" aria-label="Maintenance signals">
+                <button class="maintenance-tab is-active" type="button" role="tab" data-maintenance="code" aria-selected="true">Code drift</button>
+                <button class="maintenance-tab" type="button" role="tab" data-maintenance="support" aria-selected="false">Support gaps</button>
+                <button class="maintenance-tab" type="button" role="tab" data-maintenance="audit" aria-selected="false">Weekly audit</button>
+              </div>
+              <div class="maintenance-feed" id="maintenance-feed" role="tabpanel" aria-live="polite"></div>
+            </div>
+
+            <div class="maintenance-summary">
+              <div class="maintenance-summary__top"><span>THIS WEEK / CONTENT OPERATIONS</span><span>PRs stay human-reviewed</span></div>
+              <div class="maintenance-health"><strong>86</strong><span>docs health score</span><div class="maintenance-health__bar"><i></i></div></div>
+              <div class="maintenance-summary__list">
+                <div><span class="maintenance-status maintenance-status--lime">FIXED</span><p>Checkout guide updated from OpenAPI diff.</p><small>4 pages · 6 minutes ago</small></div>
+                <div><span class="maintenance-status maintenance-status--blue">DRAFT</span><p>“Rotate a production key” gap found in support questions.</p><small>Suggested article · review needed</small></div>
+                <div><span class="maintenance-status maintenance-status--coral">REVIEW</span><p>Screenshot no longer matches the onboarding flow.</p><small>Visual check · 1 image affected</small></div>
+              </div>
+              <a class="maintenance-summary__link" href="#source">Open the audit queue <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+
+          <div class="maintenance-grid" aria-label="Documentation maintenance features">
+            <article class="maintenance-card maintenance-card--lime"><span class="maintenance-card__number">01 / accuracy</span><h3>Drift detection</h3><p>Compare docs against code, OpenAPI, GraphQL schemas, product changes, and scheduled semantic checks.</p><code>detect → explain → open PR</code></article>
+            <article class="maintenance-card maintenance-card--blue"><span class="maintenance-card__number">02 / signal</span><h3>Support intelligence</h3><p>Turn repeated Intercom, Zendesk, Help Scout, or Crisp questions into ranked documentation gaps.</p><code>tickets → gaps → drafts</code></article>
+            <article class="maintenance-card maintenance-card--cream"><span class="maintenance-card__number">03 / workflow</span><h3>Git + visual editing</h3><p>Let engineers work in MDX and give product or support teams a safe visual editor with bidirectional sync.</p><code>branch ↔ editor ↔ PR</code></article>
+            <article class="maintenance-card maintenance-card--coral"><span class="maintenance-card__number">04 / governance</span><h3>Approve every change</h3><p>Use roles, inline comments, review stages, version diffs, and audit logs without giving up Git history.</p><code>draft → review → publish</code></article>
+            <article class="maintenance-card maintenance-card--outline"><span class="maintenance-card__number">05 / surfaces</span><h3>Docs + help center + wiki</h3><p>Publish developer docs, customer help, and private internal knowledge from one indexed source.</p><code>public · private · embedded</code></article>
+            <article class="maintenance-card maintenance-card--outline"><span class="maintenance-card__number">06 / reach</span><h3>Widget, locales, screenshots</h3><p>Bring help into the product, keep languages aligned, and regenerate browser screenshots when UI changes.</p><code>widget + i18n + visual QA</code></article>
+          </div>
+
+          <div class="maintenance-principle"><span>✦</span><p><strong>Every suggestion is explainable.</strong> Vessel shows the signal, the affected pages, the proposed patch, and the reviewer before anything reaches production.</p><a href="#agent-layer">See the agent review loop <span aria-hidden="true">→</span></a></div>
+        </section>
+
+        <section class="agent-section" id="agent-layer">
+          <div class="section-pad agent-section__inner">
+            <div class="section-intro section-intro--light">
+              <div class="eyebrow eyebrow--light"><span class="eyebrow__dot"></span> The agent layer</div>
+              <h2>Every page is a better prompt.</h2>
+              <p>Give agents the constraints, examples, and permissions they need before they start guessing. Keep the whole contract in version control.</p>
+            </div>
+
+            <div class="agent-grid">
+              <div class="agent-terminal">
+                <div class="terminal__bar">
+                  <div class="window-dots window-dots--dark"><span></span><span></span><span></span></div>
+                  <span>agent-session / checkout</span>
+                  <span class="terminal__state"><i></i> context loaded</span>
+                </div>
+                <div class="terminal__body">
+                  <div class="terminal-line terminal-line--muted"><span class="terminal-prompt">›</span> vessel context sync</div>
+                  <div class="terminal-line terminal-line--success"><span class="terminal-prompt">✓</span> 14 pages indexed <span>+ 2 skills</span></div>
+                  <div class="terminal-line terminal-line--success"><span class="terminal-prompt">✓</span> permissions resolved <span>read:checkout</span></div>
+                  <div class="terminal-divider"></div>
+                  <form class="query-form" id="query-form">
+                    <label for="agent-query"><span class="terminal-prompt">›</span> Ask the docs</label>
+                    <div class="query-input-wrap">
+                      <input id="agent-query" name="query" value="How do I create a checkout session?" autocomplete="off" />
+                      <button type="submit" aria-label="Ask Vessel">↵</button>
+                    </div>
+                  </form>
+                  <div class="terminal-answer" id="terminal-answer">
+                    <div class="terminal-answer__label">Vessel found the shortest path</div>
+                    <strong>Use <span>POST /v1/checkout</span> with a price and success URL.</strong>
+                    <small>Sources: Quickstart · API reference · Node SDK</small>
+                  </div>
+                </div>
+              </div>
+
+              <div class="agent-capabilities">
+                <article class="capability-card capability-card--lime">
+                  <div class="capability-card__top"><span>01 / artifact</span><span class="capability-symbol">↗</span></div>
+                  <h3>Repo-native instructions</h3>
+                  <p>Generate AGENTS.md, skills, and contribution rules right beside the code they describe.</p>
+                  <code>AGENTS.md</code>
+                </article>
+                <article class="capability-card capability-card--blue">
+                  <div class="capability-card__top"><span>02 / protocol</span><span class="capability-symbol">⌁</span></div>
+                  <h3>MCP without the maze</h3>
+                  <p>Expose searchable docs and safe, typed tools to Claude, Cursor, or your own agent runtime.</p>
+                  <code>tools/list → tools/call</code>
+                </article>
+                <article class="capability-card capability-card--cream">
+                  <div class="capability-card__top"><span>03 / contract</span><span class="capability-symbol">⌘</span></div>
+                  <h3>Examples that execute</h3>
+                  <p>Keep OpenAPI, SDK snippets, and real responses close enough that an agent can copy with confidence.</p>
+                  <code>openapi.yaml + examples/</code>
+                </article>
+                <article class="capability-card capability-card--outline">
+                  <div class="capability-card__top"><span>04 / feedback</span><span class="capability-symbol">↺</span></div>
+                  <h3>See what needs fixing</h3>
+                  <p>Trace the questions that missed, the pages agents skip, and the context your docs are missing.</p>
+                  <code>feedback.log</code>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-pad workflow-section">
+          <div class="section-intro section-intro--row">
+            <div>
+              <div class="eyebrow"><span class="eyebrow__dot"></span> Designed for change</div>
+              <h2>Your docs should move at the speed of your product.</h2>
+            </div>
+            <p>Vessel keeps docs close to the changes that make them true. Review them in pull requests, preview them before merge, and ship every surface together.</p>
+          </div>
+
+          <div class="workflow-list">
+            <article class="workflow-row">
+              <span class="workflow-row__index">01</span>
+              <div class="workflow-row__icon workflow-row__icon--lime">⌘</div>
+              <div class="workflow-row__content"><h3>Git is the source of truth</h3><p>Markdown, OpenAPI, assets, and agent instructions stay in the repo. Bring your own editor, branch strategy, and review culture.</p></div>
+              <span class="workflow-row__arrow">↗</span>
+            </article>
+            <article class="workflow-row">
+              <span class="workflow-row__index">02</span>
+              <div class="workflow-row__icon workflow-row__icon--blue">◌</div>
+              <div class="workflow-row__content"><h3>Preview the whole context</h3><p>See the human page and the agent output together before anything goes live. Catch stale examples while they are still a diff.</p></div>
+              <span class="workflow-row__arrow">↗</span>
+            </article>
+            <article class="workflow-row">
+              <span class="workflow-row__index">03</span>
+              <div class="workflow-row__icon workflow-row__icon--coral">✦</div>
+              <div class="workflow-row__content"><h3>Measure comprehension, not clicks</h3><p>Learn which questions agents ask, where they lose confidence, and which docs turn a search into a successful action.</p></div>
+              <span class="workflow-row__arrow">↗</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="deploy-section" id="deploy">
+          <div class="section-pad deploy-section__inner">
+            <div class="deploy-head">
+              <div>
+                <div class="eyebrow eyebrow--light"><span class="eyebrow__dot"></span> Ship it your way</div>
+                <h2>One repo. Any host. Zero vendor tax.</h2>
+              </div>
+              <p>Your docs are a static build with an optional edge gateway. Bring the provider your team already trusts — or run Vessel on your own hardware.</p>
+            </div>
+
+            <div class="deploy-grid">
+              <article class="deploy-card deploy-card--cloudflare">
+                <div class="deploy-card__brand">
+                  <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M31.4 31.5c-.5-5.6-5.2-10-10.9-10-4.9 0-9 3.1-10.5 7.4-.2.6.2 1.3.9 1.3h19.9c.4 0 .7-.3.6-.7Z" fill="currentColor"/><path d="M38.9 29.4c-.4-5.3-4.6-9.4-9.8-9.4-4.6 0-8.4 3-9.5 7.2-.2.7.3 1.4 1 1.4h17.5c.5 0 .9.3.8.8Z" fill="currentColor" opacity=".75"/><path d="M8.7 32.5h31.1c.7 0 1.2.7.9 1.3-1.6 3.6-5.2 6.1-9.4 6.1H16.6c-4.2 0-7.9-2.5-9.4-6.1-.3-.6.2-1.3.9-1.3Z" fill="currentColor" opacity=".45"/></svg>
+                  <span>Cloudflare</span>
+                </div>
+                <span class="deploy-card__tag">Workers button</span>
+                <h3>Deploy at the edge</h3>
+                <p>Clone the repo, provision the edge layer, and turn on previews from one setup screen.</p>
+                <a class="button button--light" href="https://deploy.workers.cloudflare.com/?url=https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer" data-deploy="cloudflare">Deploy on Cloudflare <span aria-hidden="true">↗</span></a>
+                <div class="deploy-card__code"><span>$</span> npm run deploy</div>
+              </article>
+
+              <article class="deploy-card deploy-card--netlify">
+                <div class="deploy-card__brand">
+                  <span class="netlify-mark">N</span>
+                  <span>Netlify</span>
+                </div>
+                <span class="deploy-card__tag">Deploy button</span>
+                <h3>Ship from your repo</h3>
+                <p>Use the official one-click flow, then let every push build your docs and agent surfaces.</p>
+                <a class="button button--light" href="https://app.netlify.com/start/deploy?repository=https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer" data-deploy="netlify">Deploy on Netlify <span aria-hidden="true">↗</span></a>
+                <div class="deploy-card__code"><span>$</span> npm run build</div>
+              </article>
+
+              <article class="deploy-card deploy-card--local">
+                <div class="deploy-card__brand">
+                  <span class="local-mark">⌂</span>
+                  <span>Anywhere</span>
+                </div>
+                <span class="deploy-card__tag">Bring your own infra</span>
+                <h3>Keep it completely yours</h3>
+                <p>Export the static build to S3, Nginx, a VPS, or the server sitting next to your API.</p>
+                <a class="button button--dark" href="#source">Read the setup guide <span aria-hidden="true">→</span></a>
+                <div class="deploy-card__code"><span>$</span> npm run build</div>
+              </article>
+            </div>
+
+            <div class="deploy-trust">
+              <span>MIT licensed</span><i></i><span>No required account</span><i></i><span>Bring your own keys</span><i></i><span>Portable by design</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="source-section section-pad" id="source">
+          <div class="source-card">
+            <div class="source-card__copy">
+              <div class="eyebrow"><span class="eyebrow__dot"></span> Built in public</div>
+              <h2>A docs platform you can fork, inspect, and make yours.</h2>
+              <p>Vessel is a starting point, not a walled garden. The source, the build, and the deployment path are all yours from the first commit.</p>
+              <div class="source-actions">
+                <a class="button button--primary" href="https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer">View on GitHub <span aria-hidden="true">↗</span></a>
+                <button class="button button--ghost button--copy" type="button" data-copy-target="hero-command">Copy the CLI command <span aria-hidden="true">⌘</span></button>
+              </div>
+            </div>
+            <div class="source-card__visual">
+              <div class="source-orbit source-orbit--outer"></div>
+              <div class="source-orbit source-orbit--inner"></div>
+              <div class="source-node source-node--center"><span>V</span></div>
+              <div class="source-node source-node--top"><span>md</span></div>
+              <div class="source-node source-node--right"><span>API</span></div>
+              <div class="source-node source-node--bottom"><span>AI</span></div>
+              <div class="source-node source-node--left"><span>git</span></div>
+            </div>
+          </div>
+          <div class="command-bar">
+            <span class="command-bar__prompt">$</span>
+            <code id="hero-command">npm create vessel@latest</code>
+            <button class="copy-button" type="button" data-copy-target="hero-command">Copy <span aria-hidden="true">⌘</span></button>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <a class="brand brand--footer" href="#top">
+            <svg class="brand__mark" viewBox="0 0 32 32" aria-hidden="true">
+              <rect x="1" y="1" width="30" height="30" rx="10" fill="currentColor" />
+              <circle cx="11" cy="11" r="3.2" fill="#d8ff4f" />
+              <circle cx="21" cy="11" r="3.2" fill="#d8ff4f" />
+              <circle cx="11" cy="21" r="3.2" fill="#d8ff4f" />
+              <path d="M14.6 11h2.8M11 14.6v2.8M14.6 21h2.8M21 14.6v2.8" stroke="#d8ff4f" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <span>Vessel</span>
+          </a>
+          <p>Context for the next interface.</p>
+          <div class="footer-links"><a href="#suite">Platform</a><a href="#assistant-studio">Assistant</a><a href="#maintenance">Maintenance</a><a href="#agent-layer">Agent layer</a><a href="#deploy">Deploy</a><a href="https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer">GitHub</a></div>
+          <span class="footer-legal">© 2026 Vessel contributors</span>
+        </div>
+      </footer>
+    </div>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
