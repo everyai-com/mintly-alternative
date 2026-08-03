@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ship your first checkout · Vessel</title>
+    <meta name="description" content="Create a hosted checkout session with the smallest working request." />
+    <link rel="stylesheet" href="/docs/docs.css" />
+  </head>
+  <body>
+    <main class="docs-shell">
+      <header class="docs-header"><a class="docs-brand" href="/"><span>V</span> Vessel</a><a class="docs-source" href="https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer">View source ↗</a></header>
+      <div class="docs-layout">
+        <aside class="docs-aside"><span class="docs-kicker">Guides</span><h1>Ship your first checkout</h1><p>Create a hosted checkout session with the smallest working request.</p><div class="docs-tags"><span>quickstart</span><span>checkout</span><span>payments</span></div><a class="docs-index-link" href="/docs/">Browse the source index <span>→</span></a></aside>
+        <article class="docs-article"><h1>Ship your first checkout</h1>
+<p>Use the SDK or a single API request to create a hosted checkout session for your customer. Keep the first integration small, then add webhooks and authentication after the happy path works.</p>
+<h2>Create a session</h2>
+<pre><code class="language-js">const session = await vessel.checkout.create({
+  price: &quot;price_basic&quot;,
+  successUrl: &quot;https://example.com/success&quot;
+});</code></pre>
+<p>The response includes a checkout URL. Redirect the customer to that URL and store the session id beside your order.</p>
+<h2>What to do next</h2>
+<p>Read <a href="/docs/authentication/">Authentication</a> before moving the API call to production. Add <a href="/docs/webhooks/">Webhooks</a> so your server can react to payment state changes instead of trusting the browser redirect.</p><nav class="docs-pagination"><a class="next" href="/docs/authentication/"><span>Next</span><strong>Authentication and key rotation</strong></a></nav></article>
+      </div>
+      <footer class="docs-footer"><span>Generated from content/quickstart.md</span><a href="/api/docs/page?slug=quickstart">JSON page ↗</a></footer>
+    </main>
+  </body>
+</html>

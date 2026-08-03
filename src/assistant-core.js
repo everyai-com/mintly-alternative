@@ -1,3 +1,5 @@
+import { buildGroundedContext } from "./docs-core.js";
+
 const DEFAULTS = {
   openrouter: {
     baseUrl: "https://openrouter.ai/api/v1",
@@ -18,7 +20,6 @@ const DEFAULTS = {
 };
 
 const MAX_MESSAGE_LENGTH = 12000;
-const MAX_CONTEXT_LENGTH = 18000;
 
 export class AssistantError extends Error {
   constructor(message, status = 400, code = "assistant_error") {
@@ -131,13 +132,14 @@ export async function handleAssistantRequest({ body = {}, env = {} }) {
   if (!message) throw new AssistantError("Ask a question before sending the request.", 400, "missing_message");
   if (message.length > MAX_MESSAGE_LENGTH) throw new AssistantError("Questions must be 12,000 characters or fewer.", 413, "message_too_long");
 
-  const context = typeof body.context === "string" ? body.context.trim().slice(0, MAX_CONTEXT_LENGTH) : "";
+  const grounded = buildGroundedContext(message, body.context);
+  const context = grounded.text;
   const config = resolveAssistantConfig(body, env);
   const system = [
     "You are Vessel Assistant, a documentation-focused AI assistant.",
     "Answer from the supplied documentation context when it is present.",
     "If the context does not support an answer, say what is missing instead of inventing an API.",
-    "Prefer concise steps and runnable examples."
+    "Prefer concise steps and runnable examples. Mention the source page path when a source supports the answer."
   ].join(" ");
   const prompt = context ? `Documentation context:\n${context}\n\nQuestion:\n${message}` : message;
   const maxTokens = clampNumber(body.maxTokens, 900, 128, 2048);
@@ -193,6 +195,7 @@ export async function handleAssistantRequest({ body = {}, env = {} }) {
     provider: config.provider,
     model: config.model,
     answer,
-    usage: payload.usage || null
+    usage: payload.usage || null,
+    sources: grounded.sources
   };
 }

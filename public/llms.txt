@@ -7,6 +7,9 @@
 - [Platform overview](/#platform): One source that compiles to human docs, llms.txt, and MCP surfaces.
 - [Agent layer](/#agent-layer): Repo-native instructions, typed tools, runnable examples, and feedback loops.
 - [AI Assistant](/#assistant-studio): Bring OpenRouter, OpenAI, Anthropic, or a custom OpenAI-compatible key to a private assistant gateway.
+- [Docs index](/docs/): Browse the generated human-readable source index.
+- [Docs API](/api/docs/index): Discover pages, then search the indexed Markdown source or retrieve complete source-grounded pages.
+- [MCP endpoint](/api/mcp): Read-only JSON-RPC tools for search, page retrieval, and runnable examples.
 - [Maintenance](/#maintenance): Detect code, product, support, visual, and semantic drift; explain changes; and hold generated patches for review.
 - [Deployment](/#deploy): Deploy with Cloudflare Workers, Netlify, or any static host.
 - [Source and setup](/#source): Open-source project direction and starter command.

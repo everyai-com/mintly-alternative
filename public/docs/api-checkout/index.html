@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Checkout API reference · Vessel</title>
+    <meta name="description" content="Create and expire checkout sessions with the API contract close to runnable examples." />
+    <link rel="stylesheet" href="/docs/docs.css" />
+  </head>
+  <body>
+    <main class="docs-shell">
+      <header class="docs-header"><a class="docs-brand" href="/"><span>V</span> Vessel</a><a class="docs-source" href="https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer">View source ↗</a></header>
+      <div class="docs-layout">
+        <aside class="docs-aside"><span class="docs-kicker">API reference</span><h1>Checkout API reference</h1><p>Create and expire checkout sessions with the API contract close to runnable examples.</p><div class="docs-tags"><span>api</span><span>checkout</span><span>reference</span><span>idempotency</span></div><a class="docs-index-link" href="/docs/">Browse the source index <span>→</span></a></aside>
+        <article class="docs-article"><h1>Checkout API reference</h1>
+<p>The checkout endpoint creates a hosted session for a price. Send an idempotency key when the request can be retried by a job or user action.</p>
+<h2>Create a checkout session</h2>
+<pre><code class="language-http">POST /v1/checkout
+Authorization: Bearer $VESSEL_API_KEY
+Idempotency-Key: order_123_attempt_1
+Content-Type: application/json
+
+{&quot;price&quot;:&quot;price_basic&quot;,&quot;success_url&quot;:&quot;https://example.com/success&quot;}</code></pre>
+<p>The response contains an <code>id</code>, <code>url</code>, and <code>status</code>. Store the id and use webhooks as the source of truth for completion.</p><nav class="docs-pagination"><a href="/docs/agent-context/"><span>Previous</span><strong>Agent context and permissions</strong></a></nav></article>
+      </div>
+      <footer class="docs-footer"><span>Generated from content/api-checkout.md</span><a href="/api/docs/page?slug=api-checkout">JSON page ↗</a></footer>
+    </main>
+  </body>
+</html>

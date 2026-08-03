@@ -6,7 +6,7 @@
 
 Vessel is designed around the idea that documentation is now an interface. A human needs navigation, examples, and clear explanations. An AI agent needs structured discovery, concise context, precise constraints, and permission-aware actions. Vessel treats both as outputs of the same source rather than separate documents that drift apart.
 
-The project is intentionally static-first. A docs build can be hosted on a CDN, a server, an object store, Cloudflare Workers, or Netlify. An optional edge gateway can expose health checks and a future MCP endpoint without forcing a hosted control plane or a required account.
+The project is intentionally static-first. A docs build can be hosted on a CDN, a server, an object store, Cloudflare Workers, or Netlify. An optional edge gateway exposes health checks, docs retrieval, and a read-only MCP endpoint without forcing a hosted control plane or a required account.
 
 ## Generated surfaces
 
@@ -14,7 +14,7 @@ Human docs are a readable, searchable web experience for guides, concepts, API r
 
 The agent index is a concise Markdown overview at /llms.txt plus a complete context export at /llms-full.txt. Each link should point to a source page with enough description for an agent to choose the right context.
 
-The MCP gateway is intended to expose read-only resources and typed tools first. A typical initial surface includes search_docs, get_page, and list_examples. Mutating actions should be added only with an explicit permission model and a human approval path.
+The MCP gateway now exposes read-only resources and typed tools through POST /api/mcp. The initial surface includes search_docs, get_page, and list_examples, plus vessel://docs/<slug> resources. Mutating actions should be added only with an explicit permission model and a human approval path.
 
 Repo-native agent artifacts such as AGENTS.md and SKILL.md can live beside the code they explain. This keeps instructions versioned, reviewable, and close to the implementation they constrain.
 
@@ -28,13 +28,13 @@ Repo-native agent artifacts such as AGENTS.md and SKILL.md can live beside the c
 
 ## Current demo
 
-The current front-end is a polished product surface demonstrating the complete platform shape: the three generated views, an editor, API playground, Assistant, BYOK provider settings, maintenance audit queue, insights, release controls, agent query interaction, GitHub connection path, open-source positioning, and live one-click deployment paths. The shared assistant adapter and same-origin gateway are scaffolded for Cloudflare Workers and Netlify Functions; the maintenance scheduler, source/support adapters, hybrid editor, API linter, governance service, full documentation compiler, authentication service, analytics backend, retrieval index, and MCP implementation are still being built.
+The current front-end is a polished product surface demonstrating the complete platform shape: the three generated views, an editor, API playground, Assistant, BYOK provider settings, maintenance audit queue, insights, release controls, agent query interaction, GitHub connection path, open-source positioning, and live one-click deployment paths. The source compiler now indexes Markdown pages into a shared search/retrieval model, and the Cloudflare Worker and Netlify Functions expose docs search, page retrieval, and read-only MCP tools. The maintenance scheduler, source/support adapters, hybrid editor, API linter, governance service, authentication service, and analytics backend are still being built.
 
 ## AI Assistant
 
 The Assistant accepts OpenRouter, OpenAI, Anthropic, and custom OpenAI-compatible configurations. A key entered in the browser demo is kept in memory for the current tab and is sent only to the same-origin `/api/assistant` route when the user asks for a live answer. Production deployments should set `AI_API_KEY` or provider-specific secrets on the Worker/Function instead. The adapter never returns or logs a key.
 
-The Assistant uses documentation context as a separate input from the model provider. This makes model switching, self-hosting, and future MCP-backed retrieval independent concerns.
+The Assistant uses the indexed documentation context as a separate input from the model provider. A question such as “how do I rotate a production key?” is ranked against the source pages, the strongest passages are added to the provider prompt, and the response includes source paths. This makes model switching, self-hosting, and future MCP-backed retrieval independent concerns.
 
 ## Maintenance layer
 
@@ -52,10 +52,10 @@ Vessel is intentionally targeting the feature categories users expect from a mod
 
 ## Intended next steps
 
-- Parse a docs directory and generate a typed navigation tree.
+- Add MDX components, visual editing, and a typed navigation tree on top of the current Markdown compiler.
 - Render MDX components, themes, versions, locales, and custom domains.
 - Generate API pages and an interactive OpenAPI/AsyncAPI playground.
-- Generate llms.txt, llms-full.txt, sitemap metadata, and a real MCP endpoint.
+- Add MCP authentication, streaming, and richer generated machine context.
 - Add preview deployments, editor checks, redirects, changelogs, and webhooks.
 - Add Assistant retrieval, citations, feedback, search analytics, and agent telemetry.
 - Add auth, page-level access, integrations, and the research-to-PR agent workflow.

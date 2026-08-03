@@ -14,6 +14,12 @@
   GITHUB_APP_SLUG = "Optional public GitHub App slug"
 
 [[redirects]]
+  from = "/api/docs/*"
+  to = "/.netlify/functions/docs?path=:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200

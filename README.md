@@ -6,10 +6,10 @@ Vessel is an open-source, self-hostable documentation layer for the teams buildi
 - llms.txt and llms-full.txt context for AI systems;
 - an MCP-ready surface for discoverable resources and tools;
 - repo-native agent instructions and runnable examples;
-- a maintenance layer that detects drift, mines support gaps, and routes explainable changes through review.
+- a maintenance layer that detects drift, mines support gaps, and routes explainable changes through review;
 - a provider-neutral AI Assistant with BYOK support for OpenRouter, OpenAI, Anthropic, and custom OpenAI-compatible endpoints.
 
-This repository currently contains the product landing page, a full-platform feature preview, and a static-first deployment scaffold. The interactive previews are intentionally local and dependency-light while the documentation compiler, auth layer, analytics, and MCP gateway are being designed in public.
+This repository contains the product landing page, a Markdown source compiler, a generated docs index, grounded search, read-only MCP tools, and a static-first deployment scaffold. The interactive previews are intentionally local and dependency-light while the authenticated control plane, analytics, and maintenance services are being designed in public.
 
 See [FEATURES.md](FEATURES.md) for the Mintlify-class feature inventory, current demo coverage, and the implementation order for the open-source product.
 
@@ -24,6 +24,8 @@ Build and preview the production bundle:
     npm run preview
 
 The Cloudflare Worker also exposes GET /health after deployment.
+
+The functional docs surface is available at `GET /docs/`, `GET /api/docs/index`, `GET /api/docs/search?q=checkout`, `GET /api/docs/page?slug=quickstart`, and `POST /api/mcp`. Netlify exposes the same routes through its Functions redirects.
 
 ## Deploy
 
@@ -49,7 +51,7 @@ Cloudflare's Deploy to Cloudflare flow creates a GitHub/GitLab copy, configures 
 
 ## AI Assistant and BYOK
 
-The browser includes a polished provider settings surface for OpenRouter, OpenAI, Anthropic, and custom OpenAI-compatible endpoints. It keeps a key in memory only for the current tab and calls the same-origin `/api/assistant` gateway. The production path is server-side configuration through Worker secrets or Netlify environment variables.
+The browser includes a polished provider settings surface for OpenRouter, OpenAI, Anthropic, and custom OpenAI-compatible endpoints. It keeps a key in memory only for the current tab and calls the same-origin `/api/assistant` gateway. The gateway now grounds the provider prompt with the indexed Markdown pages and returns source paths alongside the answer. The production path is server-side configuration through Worker secrets or Netlify environment variables.
 
 Supported variables are documented in [.env.example](.env.example). Provider-specific behavior is implemented in `src/assistant-core.js`; the Cloudflare Worker and Netlify Function share the same adapter logic.
 
@@ -73,15 +75,15 @@ The first version is being shaped around three recurring needs in agent-facing d
 
 The product roadmap is:
 
-- Markdown/MDX and frontmatter parser with navigation generation;
+- browser editing, MDX components, and navigation generation on top of the current Markdown compiler;
 - built-in components, themes, custom domains, and browser editing;
 - OpenAPI/AsyncAPI reference rendering with an interactive playground;
-- generated llms.txt, full-context exports, and an Assistant with citations;
+- generated llms.txt, full-context exports, and an Assistant with richer citations and analytics;
 - content drift detection, scheduled semantic audits, support-ticket adapters, and suggested reviewable PRs;
 - a hybrid Git/visual editor with bidirectional sync, comments, previews, and GraphQL/style linting;
 - public docs, customer help center, private wiki, embedded help widget, versions, localization, screenshots, and migration-safe redirects;
 - authentication, page-level access, roles, approval stages, audit logs, and self-hosted analytics;
-- changelogs, RSS, webhooks, Slack, support integrations, admin APIs, and a real MCP server;
+- changelogs, RSS, webhooks, Slack, support integrations, admin APIs, and MCP auth/streaming;
 - an agent workflow that researches, plans, validates, and opens reviewable PRs.
 
 The attached Mintlify-alternatives inventory informed this order. We selected the features that improve accuracy, ownership, and self-hosting first; the UI preview is not a claim that every listed backend exists today. See [FEATURES.md](FEATURES.md) for the category-by-category status and research links.

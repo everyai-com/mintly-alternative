@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Verify webhook events · Vessel</title>
+    <meta name="description" content="Verify signatures, preserve event ids, and acknowledge webhooks quickly." />
+    <link rel="stylesheet" href="/docs/docs.css" />
+  </head>
+  <body>
+    <main class="docs-shell">
+      <header class="docs-header"><a class="docs-brand" href="/"><span>V</span> Vessel</a><a class="docs-source" href="https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer">View source ↗</a></header>
+      <div class="docs-layout">
+        <aside class="docs-aside"><span class="docs-kicker">Guides</span><h1>Verify webhook events</h1><p>Verify signatures, preserve event ids, and acknowledge webhooks quickly.</p><div class="docs-tags"><span>webhooks</span><span>events</span><span>security</span><span>retries</span></div><a class="docs-index-link" href="/docs/">Browse the source index <span>→</span></a></aside>
+        <article class="docs-article"><h1>Verify webhook events</h1>
+<p>Treat webhook requests as untrusted input. Verify the signature before parsing the event, persist the event id for idempotency, and return a fast 2xx response after the event is durably queued.</p>
+<h2>A safe handler shape</h2>
+<pre><code class="language-ts">export async function handleWebhook(request: Request) {
+  const rawBody = await request.text();
+  verifySignature(request.headers, rawBody);
+  const event = JSON.parse(rawBody);
+  await enqueueOnce(event.id, event);
+  return new Response(&quot;ok&quot;, { status: 202 });
+}</code></pre>
+<p>If processing fails, retry from the queue rather than asking the provider to resend a request you have already accepted. Keep the original event id in logs and traces.</p><nav class="docs-pagination"><a href="/docs/authentication/"><span>Previous</span><strong>Authentication and key rotation</strong></a><a class="next" href="/docs/agent-context/"><span>Next</span><strong>Agent context and permissions</strong></a></nav></article>
+      </div>
+      <footer class="docs-footer"><span>Generated from content/webhooks.md</span><a href="/api/docs/page?slug=webhooks">JSON page ↗</a></footer>
+    </main>
+  </body>
+</html>

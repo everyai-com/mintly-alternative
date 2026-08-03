@@ -8,38 +8,37 @@ This map keeps the promise precise: the landing page shows the intended experien
 
 | Surface | What Vessel is designed to ship | Current status |
 | --- | --- | --- |
-| Content | Markdown/MDX, frontmatter, browser editor, AI syntax fixes, custom components | UI preview; compiler next |
+| Content | Markdown/MDX, frontmatter, browser editor, AI syntax fixes, custom components | Markdown source compiler + index now; visual editor next |
 | Design | Themes, typography, custom CSS, responsive pages, custom domains | UI system in place; config next |
 | Navigation | Groups, tabs, menus, breadcrumbs, versions, redirects, localization | UI preview; navigation model next |
 | API docs | OpenAPI and AsyncAPI import, generated references, schemas, examples | UI preview; renderer next |
 | API playground | Interactive requests, responses, auth inheritance, language tabs | UI preview; proxy next |
 | API lifecycle | OpenAPI, AsyncAPI, and GraphQL design-first specs, contract diffs, lint/style rules | UI preview; parser and linter next |
-| Assistant | Grounded answers, citations, code examples, search analytics, BYOK provider adapters | UI + same-origin gateway scaffold; retrieval/index next |
+| Assistant | Grounded answers, citations, code examples, search analytics, BYOK provider adapters | UI + gateway + source-grounded retrieval now; citations/analytics next |
 | Agent workflow | Repo/web research, plans, validation, AGENTS.md, reviewable PRs | UI preview; worker + integrations next |
 | Maintenance | Code/product/support drift, scheduled semantic audits, explainable patches, suggested PRs | UI preview; source adapters + scheduler next |
 | Collaboration | MDX/Git editing, visual editing, inline comments, bidirectional sync, previews | UI preview; editor service next |
 | Knowledge hubs | Public docs, customer help center, private wiki, indexed embedded help widget | UI preview; routing/search/auth next |
 | Governance | RBAC, category/page access, multi-step approvals, diffs, comments, audit logs | UI preview; policy service next |
-| Machine context | `llms.txt`, `llms-full.txt`, sitemap, page metadata | Static artifacts now; generated compiler next |
-| MCP | Search, page retrieval, examples, read-only resources, typed tools | Concept preview; production server next |
+| Machine context | `llms.txt`, `llms-full.txt`, sitemap, page metadata | Static artifacts + generated docs index now |
+| MCP | Search, page retrieval, examples, read-only resources, typed tools | Read-only JSON-RPC endpoint now; auth/streaming next |
 | Access | JWT, OAuth, password gates, page/group rules, roles, SSO-ready boundaries | Concept preview; auth service next |
 | Insights | Visitors, popular pages, failed searches, support deflection, endpoint usage, feedback, agent confidence | Concept preview; self-hosted telemetry next |
 | Releases | Changelog, tags, RSS, announcements, update components | UI preview; content model next |
 | Visual + reach | Browser screenshots, visual QA, localization, SEO redirects, migration tooling | UI preview; workers + compiler next |
 | Integrations | GitHub/GitLab, Slack, webhooks, browser extension, support tools, admin API, CI checks | Roadmap |
-| Hosting | Netlify, Cloudflare Workers, static export, own infrastructure | Build/deploy scaffold now |
+| Hosting | Netlify, Cloudflare Workers, static export, own infrastructure | Build/deploy scaffold + Worker/Function APIs now |
 | GitHub | One-click source connection, optional GitHub App, commit previews, reviewable PRs | One-click source flow + install route scaffold; App setup next |
 
 ## Build order
 
-1. Parse a docs directory into a typed page and navigation model.
-2. Render human docs, API reference pages, components, themes, and versioned routes.
-3. Generate `llms.txt`, `llms-full.txt`, sitemap metadata, and an MCP-readable index from the same model.
-4. Add preview builds, link/style checks, hybrid browser editing, and OpenAPI/AsyncAPI/GraphQL contract linting.
-5. Add the maintenance scheduler, source/support adapters, drift explanations, and reviewable repair PRs.
-6. Add Assistant retrieval, citations, feedback, support deflection, endpoint usage, and agent confidence signals.
-7. Add help-center/wiki surfaces, the embedded widget, localization, screenshot checks, migration-safe redirects, and governance.
-8. Add authentication, access rules, changelogs, webhooks, Slack, and the research-to-PR agent workflow.
+1. Render the indexed Markdown source into human docs, API reference pages, components, themes, and versioned routes.
+2. Generate `llms.txt`, `llms-full.txt`, sitemap metadata, and the MCP-readable index from the same model.
+3. Add preview builds, link/style checks, hybrid browser editing, and OpenAPI/AsyncAPI/GraphQL contract linting.
+4. Add the maintenance scheduler, source/support adapters, drift explanations, and reviewable repair PRs.
+5. Add Assistant citations, feedback, support deflection, endpoint usage, and agent confidence signals.
+6. Add help-center/wiki surfaces, the embedded widget, localization, screenshot checks, migration-safe redirects, and governance.
+7. Add authentication, access rules, changelogs, webhooks, Slack, and the research-to-PR agent workflow.
 
 ## Selected from the attached inventory
 

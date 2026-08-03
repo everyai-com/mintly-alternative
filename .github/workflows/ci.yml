@@ -29,6 +29,9 @@ jobs:
       - name: Build static bundle
         run: npm run build
 
+      - name: Run core tests
+        run: npm test
+
       - name: Check JavaScript syntax
         run: |
           node --check src/main.js

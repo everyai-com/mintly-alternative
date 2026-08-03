@@ -1,4 +1,5 @@
 import { AssistantError, handleAssistantRequest } from "./assistant-core.js";
+import { getMcpManifest, getPage, handleMcpRequest, listPages, searchDocs } from "./docs-core.js";
 
 const REPOSITORY_URL = "https://github.com/everyai-com/mintly-alternative";
 
@@ -34,6 +35,46 @@ async function assistantResponse(request, env) {
   }
 }
 
+function methodNotAllowed(allowed) {
+  return jsonResponse({ ok: false, code: "method_not_allowed", allowed }, 405);
+}
+
+function docsResponse(request, url) {
+  if (request.method !== "GET") return methodNotAllowed(["GET"]);
+
+  if (url.pathname === "/api/docs/search") {
+    const query = url.searchParams.get("q") || "";
+    const limit = url.searchParams.get("limit") || "8";
+    return jsonResponse({ ok: true, query, results: searchDocs(query, limit) });
+  }
+
+  if (url.pathname === "/api/docs/index") {
+    return jsonResponse({ ok: true, version: 1, pages: listPages() });
+  }
+
+  const slug = url.searchParams.get("slug") || "";
+  const page = getPage(slug);
+  if (!page) return jsonResponse({ ok: false, code: "page_not_found", slug }, 404);
+  return jsonResponse({ ok: true, page });
+}
+
+async function mcpResponse(request) {
+  if (request.method === "OPTIONS") return new Response(null, { status: 204 });
+  if (request.method === "GET") return jsonResponse({ ok: true, ...getMcpManifest() });
+  if (request.method !== "POST") return methodNotAllowed(["POST"]);
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return jsonResponse({ jsonrpc: "2.0", id: null, error: { code: -32700, message: "Parse error." } }, 400);
+  }
+
+  const response = handleMcpRequest(body);
+  if (!response) return new Response(null, { status: 202 });
+  return jsonResponse(response);
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -44,6 +85,14 @@ export default {
 
     if (url.pathname === "/api/assistant") {
       return assistantResponse(request, env);
+    }
+
+    if (url.pathname === "/api/docs/search" || url.pathname === "/api/docs/page" || url.pathname === "/api/docs/index") {
+      return docsResponse(request, url);
+    }
+
+    if (url.pathname === "/api/mcp") {
+      return mcpResponse(request);
     }
 
     if (url.pathname === "/api/github/install") {

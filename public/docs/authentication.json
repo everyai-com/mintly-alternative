@@ -1,0 +1,35 @@
+{
+  "slug": "authentication",
+  "title": "Authentication and key rotation",
+  "description": "Keep API credentials server-side and rotate them without breaking active clients.",
+  "section": "Guides",
+  "order": 2,
+  "tags": [
+    "authentication",
+    "security",
+    "keys",
+    "tokens"
+  ],
+  "headings": [
+    {
+      "level": 1,
+      "text": "Authentication and key rotation"
+    },
+    {
+      "level": 2,
+      "text": "Make an authenticated request"
+    },
+    {
+      "level": 2,
+      "text": "Rotate without downtime"
+    }
+  ],
+  "examples": [
+    {
+      "language": "bash",
+      "code": "curl https://api.example.com/v1/checkout \\\\\n  -H \"Authorization: Bearer $VESSEL_API_KEY\" \\\\\n  -H \"Content-Type: application/json\""
+    }
+  ],
+  "content": "# Authentication and key rotation\n\nSend a bearer token from a trusted server. Never put a production credential in browser JavaScript, a screenshot, a support ticket, or a documentation example.\n\n## Make an authenticated request\n\n```bash\ncurl https://api.example.com/v1/checkout \\\\\n  -H \"Authorization: Bearer $VESSEL_API_KEY\" \\\\\n  -H \"Content-Type: application/json\"\n```\n\n## Rotate without downtime\n\nCreate a replacement key, deploy it alongside the current key, move traffic, and revoke the old key only after active clients have rotated. Keep an overlap window long enough for background jobs and mobile clients to update.\n\nFor a provider key used by Vessel Assistant, prefer a Worker secret or Netlify environment variable. Browser BYOK is intentionally ephemeral and should only be used on a private deployment.",
+  "text": "Authentication and key rotation Send a bearer token from a trusted server. Never put a production credential in browser JavaScript, a screenshot, a support ticket, or a documentation example. Make an authenticated request Rotate without downtime Create a replacement key, deploy it alongside the current key, move traffic, and revoke the old key only after active clients have rotated. Keep an overlap window long enough for background jobs and mobile clients to update. For a provider key used by Vessel Assistant, prefer a Worker secret or Netlify environment variable. Browser BYOK is intentionally ephemeral and should only be used on a private deployment."
+}

@@ -3977,6 +3977,32 @@ button {
   background: rgba(255, 255, 255, 0.18);
 }
 
+.source-api-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 15px;
+  margin-top: 22px;
+}
+
+.source-api-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: rgba(18, 26, 29, 0.66);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: 0.02em;
+}
+
+.source-api-links a:hover {
+  color: var(--ink);
+}
+
+.source-api-links span {
+  font-size: 12px;
+}
+
 .source-card__visual {
   position: relative;
   align-self: stretch;
@@ -5482,6 +5508,11 @@ button {
 
   .source-actions .button {
     width: 100%;
+  }
+
+  .source-api-links {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .source-card__visual {

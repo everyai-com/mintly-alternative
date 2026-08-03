@@ -1,0 +1,31 @@
+{
+  "slug": "webhooks",
+  "title": "Verify webhook events",
+  "description": "Verify signatures, preserve event ids, and acknowledge webhooks quickly.",
+  "section": "Guides",
+  "order": 3,
+  "tags": [
+    "webhooks",
+    "events",
+    "security",
+    "retries"
+  ],
+  "headings": [
+    {
+      "level": 1,
+      "text": "Verify webhook events"
+    },
+    {
+      "level": 2,
+      "text": "A safe handler shape"
+    }
+  ],
+  "examples": [
+    {
+      "language": "ts",
+      "code": "export async function handleWebhook(request: Request) {\n  const rawBody = await request.text();\n  verifySignature(request.headers, rawBody);\n  const event = JSON.parse(rawBody);\n  await enqueueOnce(event.id, event);\n  return new Response(\"ok\", { status: 202 });\n}"
+    }
+  ],
+  "content": "# Verify webhook events\n\nTreat webhook requests as untrusted input. Verify the signature before parsing the event, persist the event id for idempotency, and return a fast 2xx response after the event is durably queued.\n\n## A safe handler shape\n\n```ts\nexport async function handleWebhook(request: Request) {\n  const rawBody = await request.text();\n  verifySignature(request.headers, rawBody);\n  const event = JSON.parse(rawBody);\n  await enqueueOnce(event.id, event);\n  return new Response(\"ok\", { status: 202 });\n}\n```\n\nIf processing fails, retry from the queue rather than asking the provider to resend a request you have already accepted. Keep the original event id in logs and traces.",
+  "text": "Verify webhook events Treat webhook requests as untrusted input. Verify the signature before parsing the event, persist the event id for idempotency, and return a fast 2xx response after the event is durably queued. A safe handler shape If processing fails, retry from the queue rather than asking the provider to resend a request you have already accepted. Keep the original event id in logs and traces."
+}

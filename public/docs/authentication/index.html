@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Authentication and key rotation · Vessel</title>
+    <meta name="description" content="Keep API credentials server-side and rotate them without breaking active clients." />
+    <link rel="stylesheet" href="/docs/docs.css" />
+  </head>
+  <body>
+    <main class="docs-shell">
+      <header class="docs-header"><a class="docs-brand" href="/"><span>V</span> Vessel</a><a class="docs-source" href="https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer">View source ↗</a></header>
+      <div class="docs-layout">
+        <aside class="docs-aside"><span class="docs-kicker">Guides</span><h1>Authentication and key rotation</h1><p>Keep API credentials server-side and rotate them without breaking active clients.</p><div class="docs-tags"><span>authentication</span><span>security</span><span>keys</span><span>tokens</span></div><a class="docs-index-link" href="/docs/">Browse the source index <span>→</span></a></aside>
+        <article class="docs-article"><h1>Authentication and key rotation</h1>
+<p>Send a bearer token from a trusted server. Never put a production credential in browser JavaScript, a screenshot, a support ticket, or a documentation example.</p>
+<h2>Make an authenticated request</h2>
+<pre><code class="language-bash">curl https://api.example.com/v1/checkout \\
+  -H &quot;Authorization: Bearer $VESSEL_API_KEY&quot; \\
+  -H &quot;Content-Type: application/json&quot;</code></pre>
+<h2>Rotate without downtime</h2>
+<p>Create a replacement key, deploy it alongside the current key, move traffic, and revoke the old key only after active clients have rotated. Keep an overlap window long enough for background jobs and mobile clients to update.</p>
+<p>For a provider key used by Vessel Assistant, prefer a Worker secret or Netlify environment variable. Browser BYOK is intentionally ephemeral and should only be used on a private deployment.</p><nav class="docs-pagination"><a href="/docs/quickstart/"><span>Previous</span><strong>Ship your first checkout</strong></a><a class="next" href="/docs/webhooks/"><span>Next</span><strong>Verify webhook events</strong></a></nav></article>
+      </div>
+      <footer class="docs-footer"><span>Generated from content/authentication.md</span><a href="/api/docs/page?slug=authentication">JSON page ↗</a></footer>
+    </main>
+  </body>
+</html>
