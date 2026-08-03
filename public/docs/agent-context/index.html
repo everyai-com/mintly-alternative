@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Agent context and permissions · Vessel</title>
+    <meta name="description" content="Give coding agents linked context, explicit constraints, and a read-only default." />
+    <link rel="stylesheet" href="/docs/docs.css" />
+  </head>
+  <body>
+    <main class="docs-shell">
+      <header class="docs-header"><a class="docs-brand" href="/"><span>V</span> Vessel</a><a class="docs-source" href="https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer">View source ↗</a></header>
+      <div class="docs-layout">
+        <aside class="docs-aside"><span class="docs-kicker">Agent docs</span><h1>Agent context and permissions</h1><p>Give coding agents linked context, explicit constraints, and a read-only default.</p><div class="docs-tags"><span>agents</span><span>mcp</span><span>context</span><span>permissions</span></div><a class="docs-index-link" href="/docs/">Browse the source index <span>→</span></a></aside>
+        <article class="docs-article"><h1>Agent context and permissions</h1>
+<p>Agents should discover a compact map before loading every page. Use the indexed search endpoint or the read-only MCP tools to find the smallest source-grounded context for a task.</p>
+<h2>Safe defaults</h2>
+<ul><li>Read documentation and examples before proposing a change.</li><li>Keep repository writes behind a human-reviewed pull request.</li><li>Cite the page path that supports an answer.</li><li>Say what is missing when the source does not answer the question.</li></ul>
+<h2>MCP discovery</h2>
+<p>The Vessel gateway exposes <code>search_docs</code>, <code>get_page</code>, and <code>list_examples</code>. It also exposes each page as a <code>vessel://docs/&lt;slug&gt;</code> read-only resource. Mutating tools are intentionally absent until the permission and approval service is in place.</p><nav class="docs-pagination"><a href="/docs/webhooks/"><span>Previous</span><strong>Verify webhook events</strong></a><a class="next" href="/docs/api-checkout/"><span>Next</span><strong>Checkout API reference</strong></a></nav></article>
+      </div>
+      <footer class="docs-footer"><span>Generated from content/agent-context.md</span><a href="/api/docs/page?slug=agent-context">JSON page ↗</a></footer>
+    </main>
+  </body>
+</html>

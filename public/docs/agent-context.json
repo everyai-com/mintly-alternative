@@ -1,0 +1,30 @@
+{
+  "slug": "agent-context",
+  "title": "Agent context and permissions",
+  "description": "Give coding agents linked context, explicit constraints, and a read-only default.",
+  "section": "Agent docs",
+  "order": 4,
+  "tags": [
+    "agents",
+    "mcp",
+    "context",
+    "permissions"
+  ],
+  "headings": [
+    {
+      "level": 1,
+      "text": "Agent context and permissions"
+    },
+    {
+      "level": 2,
+      "text": "Safe defaults"
+    },
+    {
+      "level": 2,
+      "text": "MCP discovery"
+    }
+  ],
+  "examples": [],
+  "content": "# Agent context and permissions\n\nAgents should discover a compact map before loading every page. Use the indexed search endpoint or the read-only MCP tools to find the smallest source-grounded context for a task.\n\n## Safe defaults\n\n- Read documentation and examples before proposing a change.\n- Keep repository writes behind a human-reviewed pull request.\n- Cite the page path that supports an answer.\n- Say what is missing when the source does not answer the question.\n\n## MCP discovery\n\nThe Vessel gateway exposes `search_docs`, `get_page`, and `list_examples`. It also exposes each page as a `vessel://docs/<slug>` read-only resource. Mutating tools are intentionally absent until the permission and approval service is in place.",
+  "text": "Agent context and permissions Agents should discover a compact map before loading every page. Use the indexed search endpoint or the read only MCP tools to find the smallest source grounded context for a task. Safe defaults Read documentation and examples before proposing a change. Keep repository writes behind a human reviewed pull request. Cite the page path that supports an answer. Say what is missing when the source does not answer the question. MCP discovery The Vessel gateway exposes search docs , get page , and list examples . It also exposes each page as a vessel://docs/ read only resource. Mutating tools are intentionally absent until the permission and approval service is in place."
+}
