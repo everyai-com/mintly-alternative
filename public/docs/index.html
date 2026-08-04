@@ -4,50 +4,57 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Vessel documentation</title>
-    <meta name="description" content="Source documentation for humans, developers, and AI agents." />
+    <meta name="description" content="Source-grounded documentation for humans and AI agents." />
     <link rel="stylesheet" href="/docs/docs.css" />
   </head>
   <body>
     <main class="docs-shell">
       <header class="docs-header"><a class="docs-brand" href="/"><span>V</span> Vessel</a><a class="docs-source" href="https://github.com/everyai-com/mintly-alternative" target="_blank" rel="noreferrer">View source ↗</a></header>
       <section class="docs-index-hero">
-        <span class="docs-kicker">Source index · 5 pages</span>
+        <span class="docs-kicker">Source index · 5 pages · current</span>
         <h1>Documentation for humans and agents.</h1>
-        <p>Every page starts as readable Markdown in <code>content/</code>, then becomes a fast web page, a searchable JSON index, and a read-only MCP resource.</p>
-        <div class="docs-index-actions"><a href="/api/docs/index">JSON index ↗</a><a href="/api/mcp">MCP manifest ↗</a></div>
+        <p>Every page starts as readable Markdown in <code>content/</code>, then becomes a versioned, navigable web page, a searchable JSON index, and a read-only MCP resource.</p>
+        <div class="docs-index-actions"><a href="/api/docs/index">JSON index ↗</a><a href="/agent-manifest.json">Agent manifest ↗</a><a href="/api/mcp">MCP manifest ↗</a></div>
       </section>
-      <section class="docs-index-grid" aria-label="Documentation pages">
-    <a class="docs-card" href="/docs/quickstart/">
-      <span class="docs-card-meta">Guides · quickstart</span>
-      <strong>Ship your first checkout</strong>
-      <p>Create a hosted checkout session with the smallest working request.</p>
-      <span class="docs-card-arrow">Read page <span>→</span></span>
-    </a>
-    <a class="docs-card" href="/docs/authentication/">
-      <span class="docs-card-meta">Guides · authentication</span>
-      <strong>Authentication and key rotation</strong>
-      <p>Keep API credentials server-side and rotate them without breaking active clients.</p>
-      <span class="docs-card-arrow">Read page <span>→</span></span>
-    </a>
-    <a class="docs-card" href="/docs/webhooks/">
-      <span class="docs-card-meta">Guides · webhooks</span>
-      <strong>Verify webhook events</strong>
-      <p>Verify signatures, preserve event ids, and acknowledge webhooks quickly.</p>
-      <span class="docs-card-arrow">Read page <span>→</span></span>
-    </a>
-    <a class="docs-card" href="/docs/agent-context/">
-      <span class="docs-card-meta">Agent docs · agent-context</span>
-      <strong>Agent context and permissions</strong>
-      <p>Give coding agents linked context, explicit constraints, and a read-only default.</p>
-      <span class="docs-card-arrow">Read page <span>→</span></span>
-    </a>
-    <a class="docs-card" href="/docs/api-checkout/">
-      <span class="docs-card-meta">API reference · api-checkout</span>
-      <strong>Checkout API reference</strong>
-      <p>Create and expire checkout sessions with the API contract close to runnable examples.</p>
-      <span class="docs-card-arrow">Read page <span>→</span></span>
-    </a></section>
-      <footer class="docs-footer"><span>Generated from content/*.md</span><a href="/api/docs/index">JSON index ↗</a></footer>
+      <section class="docs-index-section">
+      <div class="docs-index-section-heading"><span class="docs-kicker">Guides</span><span>3 pages</span></div>
+      <div class="docs-index-grid">
+        <a class="docs-card" href="/docs/quickstart/">
+          <span class="docs-card-meta">current · en · quickstart</span>
+          <strong>Ship your first checkout</strong>
+          <p>Create a hosted checkout session with the smallest working request.</p>
+          <span class="docs-card-arrow">Read page <span>→</span></span>
+        </a>
+        <a class="docs-card" href="/docs/authentication/">
+          <span class="docs-card-meta">current · en · authentication</span>
+          <strong>Authentication and key rotation</strong>
+          <p>Keep API credentials server-side and rotate them without breaking active clients.</p>
+          <span class="docs-card-arrow">Read page <span>→</span></span>
+        </a>
+        <a class="docs-card" href="/docs/webhooks/">
+          <span class="docs-card-meta">current · en · webhooks</span>
+          <strong>Verify webhook events</strong>
+          <p>Verify signatures, preserve event ids, and acknowledge webhooks quickly.</p>
+          <span class="docs-card-arrow">Read page <span>→</span></span>
+        </a></div>
+    </section>
+    <section class="docs-index-section">
+      <div class="docs-index-section-heading"><span class="docs-kicker">Agent reference</span><span>2 pages</span></div>
+      <div class="docs-index-grid">
+        <a class="docs-card" href="/docs/agent-context/">
+          <span class="docs-card-meta">current · en · agent-context</span>
+          <strong>Agent context and permissions</strong>
+          <p>Give coding agents linked context, explicit constraints, and a read-only default.</p>
+          <span class="docs-card-arrow">Read page <span>→</span></span>
+        </a>
+        <a class="docs-card" href="/docs/api-checkout/">
+          <span class="docs-card-meta">current · en · api-checkout</span>
+          <strong>Checkout API reference</strong>
+          <p>Create and expire checkout sessions with the API contract close to runnable examples.</p>
+          <span class="docs-card-arrow">Read page <span>→</span></span>
+        </a></div>
+    </section>
+      <footer class="docs-footer"><span>Generated from docs.config.json and content/*.md</span><a href="/skill.md">Agent skill ↗</a></footer>
     </main>
   </body>
 </html>

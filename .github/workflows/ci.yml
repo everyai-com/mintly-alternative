@@ -32,10 +32,20 @@ jobs:
       - name: Run core tests
         run: npm test
 
+      - name: Audit documentation quality
+        run: npm run docs:check
+
       - name: Check JavaScript syntax
         run: |
           node --check src/main.js
           node --check src/worker.js
           node --check src/assistant-core.js
+          node --check src/docs-parser.js
+          node --check src/docs-audit.js
+          node --check src/docs-core.js
+          node --check scripts/build-docs.mjs
+          node --check scripts/check-docs.mjs
           node --check netlify/functions/assistant.mjs
+          node --check netlify/functions/docs.mjs
           node --check netlify/functions/github-install.mjs
+          node --check netlify/functions/mcp.mjs

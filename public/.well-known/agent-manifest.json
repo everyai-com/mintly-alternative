@@ -1,5 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": "vessel.agent-manifest/v1",
+  "name": "Vessel documentation agent contract",
+  "description": "A read-only, source-grounded contract for coding agents and documentation tools.",
+  "sourceOfTruth": "git",
   "site": {
     "name": "Vessel",
     "description": "Source-grounded documentation for humans and AI agents.",
@@ -227,6 +230,58 @@
         }
       ]
     }
+  ],
+  "surfaces": {
+    "humanDocs": "/docs/",
+    "docsIndex": "/api/docs/index",
+    "docsSearch": "/api/docs/search?q={query}",
+    "docsAudit": "/api/docs/audit",
+    "mcp": "/api/mcp",
+    "llms": "/llms.txt",
+    "fullContext": "/llms-full.txt",
+    "skill": "/skill.md",
+    "permissions": "/agent-permissions.json"
+  },
+  "capabilities": [
+    {
+      "name": "search_docs",
+      "access": "read",
+      "transports": [
+        "http",
+        "mcp"
+      ]
+    },
+    {
+      "name": "get_page",
+      "access": "read",
+      "transports": [
+        "http",
+        "mcp"
+      ]
+    },
+    {
+      "name": "list_examples",
+      "access": "read",
+      "transports": [
+        "http",
+        "mcp"
+      ]
+    },
+    {
+      "name": "audit_docs",
+      "access": "read",
+      "transports": [
+        "http",
+        "mcp"
+      ]
+    }
+  ],
+  "constraints": [
+    "read_only",
+    "cite_source_paths",
+    "do_not_invent_apis",
+    "prefer_current_version",
+    "request_human_approval_before_writes"
   ],
   "pages": [
     {

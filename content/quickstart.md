@@ -4,6 +4,12 @@ description: Create a hosted checkout session with the smallest working request.
 section: Guides
 order: 1
 tags: [quickstart, checkout, payments]
+audience: [developer, coding-agent]
+related: [authentication, webhooks]
+version: current
+locale: en
+updated: 2026-08-04
+stability: stable
 ---
 # Ship your first checkout
 

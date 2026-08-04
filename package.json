@@ -1,14 +1,16 @@
 {
   "name": "vessel-agent-docs",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "description": "An open-source, agent-ready documentation layer.",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "docs:build": "node scripts/build-docs.mjs",
+    "docs:check:only": "node scripts/check-docs.mjs",
+    "docs:check": "npm run docs:build && npm run docs:check:only",
     "build": "npm run docs:build && vite build",
-    "test": "npm run docs:build && node --test tests/core.test.mjs",
+    "test": "npm run docs:build && npm run docs:check:only && node --test tests/core.test.mjs",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy"
   },

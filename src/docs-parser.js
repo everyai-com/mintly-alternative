@@ -27,6 +27,12 @@ function parseValue(value) {
   return trimmed;
 }
 
+function stringArray(value) {
+  if (Array.isArray(value)) return value.map(String).map((item) => item.trim()).filter(Boolean);
+  if (value === undefined || value === null || value === "") return [];
+  return [String(value).trim()].filter(Boolean);
+}
+
 export function parseFrontmatter(source) {
   const lines = String(source || "").replace(/\r\n/g, "\n").split("\n");
   if (lines[0]?.trim() !== FRONTMATTER_START) return { data: {}, body: lines.join("\n").trim() };
@@ -177,7 +183,13 @@ export function parseMarkdown(source, fileName = "page.md") {
     description,
     section: String(parsed.data.section || "Guides"),
     order: Number.isFinite(Number(parsed.data.order)) ? Number(parsed.data.order) : 999,
-    tags: Array.isArray(parsed.data.tags) ? parsed.data.tags.map(String) : [],
+    tags: stringArray(parsed.data.tags),
+    audience: stringArray(parsed.data.audience),
+    related: stringArray(parsed.data.related),
+    version: String(parsed.data.version || "current"),
+    locale: String(parsed.data.locale || "en"),
+    updated: String(parsed.data.updated || ""),
+    stability: String(parsed.data.stability || "stable"),
     headings: extractHeadings(parsed.body),
     examples: extractExamples(parsed.body),
     content: parsed.body,

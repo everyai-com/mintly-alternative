@@ -10,6 +10,18 @@
     "reference",
     "idempotency"
   ],
+  "audience": [
+    "developer",
+    "coding-agent"
+  ],
+  "related": [
+    "authentication",
+    "webhooks"
+  ],
+  "version": "current",
+  "locale": "en",
+  "updated": "2026-08-04",
+  "stability": "stable",
   "headings": [
     {
       "level": 1,
@@ -27,5 +39,6 @@
     }
   ],
   "content": "# Checkout API reference\n\nThe checkout endpoint creates a hosted session for a price. Send an idempotency key when the request can be retried by a job or user action.\n\n## Create a checkout session\n\n```http\nPOST /v1/checkout\nAuthorization: Bearer $VESSEL_API_KEY\nIdempotency-Key: order_123_attempt_1\nContent-Type: application/json\n\n{\"price\":\"price_basic\",\"success_url\":\"https://example.com/success\"}\n```\n\nThe response contains an `id`, `url`, and `status`. Store the id and use webhooks as the source of truth for completion.",
-  "text": "Checkout API reference The checkout endpoint creates a hosted session for a price. Send an idempotency key when the request can be retried by a job or user action. Create a checkout session The response contains an id , url , and status . Store the id and use webhooks as the source of truth for completion."
+  "text": "Checkout API reference The checkout endpoint creates a hosted session for a price. Send an idempotency key when the request can be retried by a job or user action. Create a checkout session The response contains an id , url , and status . Store the id and use webhooks as the source of truth for completion.",
+  "source": "content/api-checkout.md"
 }

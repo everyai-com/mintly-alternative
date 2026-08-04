@@ -9,6 +9,18 @@
     "checkout",
     "payments"
   ],
+  "audience": [
+    "developer",
+    "coding-agent"
+  ],
+  "related": [
+    "authentication",
+    "webhooks"
+  ],
+  "version": "current",
+  "locale": "en",
+  "updated": "2026-08-04",
+  "stability": "stable",
   "headings": [
     {
       "level": 1,
@@ -30,5 +42,6 @@
     }
   ],
   "content": "# Ship your first checkout\n\nUse the SDK or a single API request to create a hosted checkout session for your customer. Keep the first integration small, then add webhooks and authentication after the happy path works.\n\n## Create a session\n\n```js\nconst session = await vessel.checkout.create({\n  price: \"price_basic\",\n  successUrl: \"https://example.com/success\"\n});\n```\n\nThe response includes a checkout URL. Redirect the customer to that URL and store the session id beside your order.\n\n## What to do next\n\nRead [Authentication](/docs/authentication/) before moving the API call to production. Add [Webhooks](/docs/webhooks/) so your server can react to payment state changes instead of trusting the browser redirect.",
-  "text": "Ship your first checkout Use the SDK or a single API request to create a hosted checkout session for your customer. Keep the first integration small, then add webhooks and authentication after the happy path works. Create a session The response includes a checkout URL. Redirect the customer to that URL and store the session id beside your order. What to do next Read Authentication before moving the API call to production. Add Webhooks so your server can react to payment state changes instead of trusting the browser redirect."
+  "text": "Ship your first checkout Use the SDK or a single API request to create a hosted checkout session for your customer. Keep the first integration small, then add webhooks and authentication after the happy path works. Create a session The response includes a checkout URL. Redirect the customer to that URL and store the session id beside your order. What to do next Read Authentication before moving the API call to production. Add Webhooks so your server can react to payment state changes instead of trusting the browser redirect.",
+  "source": "content/quickstart.md"
 }

@@ -1,4 +1,5 @@
-import { docsIndex } from "./generated/docs-index.js";
+import { agentManifest, agentPermissions, docsIndex, docsNavigation, siteConfig } from "./generated/docs-index.js";
+import { auditDocs } from "./docs-audit.js";
 
 const MAX_LIMIT = 20;
 const MCP_PROTOCOL_VERSION = "2025-06-18";
@@ -26,6 +27,13 @@ function publicPage(page) {
     description: page.description,
     section: page.section,
     tags: page.tags,
+    audience: page.audience,
+    related: page.related,
+    version: page.version,
+    locale: page.locale,
+    updated: page.updated,
+    stability: page.stability,
+    source: page.source,
     headings: page.headings,
     examples: page.examples,
     content: page.content
@@ -40,6 +48,12 @@ function searchResult(page, score) {
     description: page.description,
     section: page.section,
     tags: page.tags,
+    audience: page.audience,
+    version: page.version,
+    locale: page.locale,
+    updated: page.updated,
+    stability: page.stability,
+    source: page.source,
     excerpt: page.text.slice(0, 220),
     score: Math.round(score * 100) / 100
   };
@@ -58,8 +72,40 @@ export function listPages() {
     description: page.description,
     section: page.section,
     tags: page.tags,
+    audience: page.audience,
+    related: page.related,
+    version: page.version,
+    locale: page.locale,
+    updated: page.updated,
+    stability: page.stability,
+    source: page.source,
     headings: page.headings
   }));
+}
+
+export function getDocsIndex() {
+  return {
+    schemaVersion: 1,
+    site: siteConfig.site,
+    versions: siteConfig.versions || [],
+    locales: siteConfig.locales || [],
+    navigation: docsNavigation,
+    pages: listPages(),
+    agentManifest: "/agent-manifest.json",
+    permissions: "/agent-permissions.json"
+  };
+}
+
+export function getAgentManifest() {
+  return agentManifest;
+}
+
+export function getAgentPermissions() {
+  return agentPermissions;
+}
+
+export function getDocsAudit(options = {}) {
+  return auditDocs(options);
 }
 
 export function searchDocs(query, limit = 8) {
@@ -121,7 +167,7 @@ export function buildGroundedContext(question, suppliedContext = "", limit = 4) 
   for (const match of matches) {
     const page = getPage(match.slug);
     if (!page) continue;
-    sections.push(`Source: ${page.title} (/docs/${page.slug}/)\n${page.content.slice(0, 3600)}`);
+    sections.push(`Source: ${page.title} (/docs/${page.slug}/)\nVersion: ${page.version} · Locale: ${page.locale} · Updated: ${page.updated || "unknown"}\n${page.content.slice(0, 3600)}`);
   }
 
   return {
@@ -156,8 +202,39 @@ const MCP_TOOLS = [
       type: "object",
       properties: { query: { type: "string" }, limit: { type: "integer", minimum: 1, maximum: MAX_LIMIT } }
     }
+  },
+  {
+    name: "audit_docs",
+    description: "Check documentation freshness, links, metadata, examples, and navigation health.",
+    inputSchema: {
+      type: "object",
+      properties: { maxAgeDays: { type: "integer", minimum: 1, maximum: 3650 } }
+    }
   }
 ];
+
+function mcpResources() {
+  return [
+    {
+      uri: "vessel://agent-manifest",
+      name: "Vessel agent manifest",
+      description: "The generated source, capability, version, locale, and constraint contract.",
+      mimeType: "application/json"
+    },
+    {
+      uri: "vessel://agent-permissions",
+      name: "Vessel agent permissions",
+      description: "The read-only permission boundary for agent access.",
+      mimeType: "application/json"
+    },
+    ...listPages().map((page) => ({
+      uri: `vessel://docs/${page.slug}`,
+      name: page.title,
+      description: page.description,
+      mimeType: "text/markdown"
+    }))
+  ];
+}
 
 export function getMcpManifest() {
   return {
@@ -168,7 +245,10 @@ export function getMcpManifest() {
     endpoint: "/api/mcp",
     readOnly: true,
     tools: MCP_TOOLS.map((tool) => tool.name),
-    resources: listPages().map((page) => `vessel://docs/${page.slug}`)
+    resources: mcpResources().map((resource) => resource.uri),
+    agentManifest: "/agent-manifest.json",
+    permissions: "/agent-permissions.json",
+    version: siteConfig.site.defaultVersion
   };
 }
 
@@ -205,7 +285,7 @@ export function handleMcpRequest(request) {
       return success(request, {
         protocolVersion: MCP_PROTOCOL_VERSION,
         capabilities: { tools: { listChanged: false }, resources: { subscribe: false, listChanged: false } },
-        serverInfo: { name: "vessel-docs", version: "0.2.0" },
+        serverInfo: { name: "vessel-docs", version: "0.3.0" },
         instructions: "Vessel exposes read-only, source-grounded documentation tools. Cite the returned page paths in answers."
       });
     case "notifications/initialized":
@@ -215,16 +295,11 @@ export function handleMcpRequest(request) {
     case "tools/list":
       return success(request, { tools: MCP_TOOLS });
     case "resources/list":
-      return success(request, {
-        resources: listPages().map((page) => ({
-          uri: `vessel://docs/${page.slug}`,
-          name: page.title,
-          description: page.description,
-          mimeType: "text/markdown"
-        }))
-      });
+      return success(request, { resources: mcpResources() });
     case "resources/read": {
       const uri = String(params.uri || "");
+      if (uri === "vessel://agent-manifest") return success(request, { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(agentManifest, null, 2) }] });
+      if (uri === "vessel://agent-permissions") return success(request, { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(agentPermissions, null, 2) }] });
       const prefix = "vessel://docs/";
       if (!uri.startsWith(prefix)) return failure(request, -32602, "The resource URI must start with vessel://docs/.");
       let slug;
@@ -250,6 +325,7 @@ export function handleMcpRequest(request) {
         return toolResult(request, page);
       }
       if (name === "list_examples") return toolResult(request, { examples: listExamples(args.query, args.limit) });
+      if (name === "audit_docs") return toolResult(request, getDocsAudit({ maxAgeDays: args.maxAgeDays }));
       return failure(request, -32601, `Unknown tool: ${name}`);
     }
     default:

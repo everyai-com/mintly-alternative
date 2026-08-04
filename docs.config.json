@@ -1,0 +1,49 @@
+{
+  "site": {
+    "name": "Vessel",
+    "description": "Source-grounded documentation for humans and AI agents.",
+    "defaultLocale": "en",
+    "defaultVersion": "current"
+  },
+  "versions": [
+    {
+      "id": "current",
+      "label": "Current",
+      "path": "/docs/",
+      "status": "stable"
+    }
+  ],
+  "locales": [
+    {
+      "id": "en",
+      "label": "English",
+      "path": "/docs/"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Guides",
+      "pages": ["quickstart", "authentication", "webhooks"]
+    },
+    {
+      "group": "Agent reference",
+      "pages": ["agent-context", "api-checkout"]
+    }
+  ],
+  "agent": {
+    "name": "Vessel documentation agent contract",
+    "description": "A read-only, source-grounded contract for coding agents and documentation tools.",
+    "audiences": ["developer", "coding-agent", "support-agent"],
+    "capabilities": ["search_docs", "get_page", "list_examples", "audit_docs"],
+    "constraints": [
+      "read_only",
+      "cite_source_paths",
+      "do_not_invent_apis",
+      "prefer_current_version",
+      "request_human_approval_before_writes"
+    ]
+  },
+  "audit": {
+    "maxAgeDays": 365
+  }
+}

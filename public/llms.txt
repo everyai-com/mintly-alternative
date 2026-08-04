@@ -9,6 +9,10 @@
 - [AI Assistant](/#assistant-studio): Bring OpenRouter, OpenAI, Anthropic, or a custom OpenAI-compatible key to a private assistant gateway.
 - [Docs index](/docs/): Browse the generated human-readable source index.
 - [Docs API](/api/docs/index): Discover pages, then search the indexed Markdown source or retrieve complete source-grounded pages.
+- [Docs audit](/api/docs/audit): Check freshness, metadata, examples, navigation, and internal links before publishing.
+- [Agent manifest](/agent-manifest.json): Discover versions, locales, capabilities, constraints, surfaces, and page provenance.
+- [Agent permissions](/agent-permissions.json): Read-only access contract; writes require human approval.
+- [Agent skill](/skill.md): Step-by-step workflow for coding and support agents.
 - [MCP endpoint](/api/mcp): Read-only JSON-RPC tools for search, page retrieval, and runnable examples.
 - [Maintenance](/#maintenance): Detect code, product, support, visual, and semantic drift; explain changes; and hold generated patches for review.
 - [Deployment](/#deploy): Deploy with Cloudflare Workers, Netlify, or any static host.
