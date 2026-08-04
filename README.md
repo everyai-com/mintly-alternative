@@ -14,6 +14,12 @@ This repository contains the product landing page, a Markdown source compiler, c
 
 See [FEATURES.md](FEATURES.md) for the Mintlify-class feature inventory, current demo coverage, and the implementation order for the open-source product.
 
+## See it first
+
+These screenshots are captured from the current local build. Open the [visual tour](SCREENSHOTS.md) for the full gallery, or start with the landing page below.
+
+[![Vessel landing page](screenshots/landing.jpg)](SCREENSHOTS.md)
+
 ## Start in 60 seconds
 
 ```sh
