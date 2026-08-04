@@ -11,8 +11,8 @@ This map keeps the promise precise: the landing page shows the intended experien
 | Content | Markdown/MDX, frontmatter, browser editor, AI syntax fixes, custom components | Markdown compiler, provenance/freshness metadata, and quality audit now; visual editor next |
 | Design | Themes, typography, custom CSS, responsive pages, custom domains | UI system in place; config next |
 | Navigation | Groups, tabs, menus, breadcrumbs, versions, redirects, localization | Config-driven groups plus version/locale contract now; full renderer next |
-| API docs | OpenAPI and AsyncAPI import, generated references, schemas, examples | UI preview; renderer next |
-| API playground | Interactive requests, responses, auth inheritance, language tabs | UI preview; proxy next |
+| API docs | OpenAPI and AsyncAPI import, generated references, schemas, examples | OpenAPI JSON/YAML ingestion, generated references, schemas, and examples now; AsyncAPI next |
+| API playground | Interactive requests, responses, auth inheritance, language tabs | Safe curl/fetch request preview and documented mock responses now; authenticated proxy next |
 | API lifecycle | OpenAPI, AsyncAPI, and GraphQL design-first specs, contract diffs, lint/style rules | UI preview; parser and linter next |
 | Assistant | Grounded answers, citations, code examples, search analytics, BYOK provider adapters | UI + gateway + source-grounded retrieval now; citations/analytics next |
 | Agent workflow | Repo/web research, plans, validation, AGENTS.md, reviewable PRs | Agent manifest, permissions, skill workflow, and docs audit now; research/PR worker next |
@@ -20,8 +20,8 @@ This map keeps the promise precise: the landing page shows the intended experien
 | Collaboration | MDX/Git editing, visual editing, inline comments, bidirectional sync, previews | UI preview; editor service next |
 | Knowledge hubs | Public docs, customer help center, private wiki, indexed embedded help widget | UI preview; routing/search/auth next |
 | Governance | RBAC, category/page access, multi-step approvals, diffs, comments, audit logs | UI preview; policy service next |
-| Machine context | `llms.txt`, `llms-full.txt`, sitemap, page metadata | Generated docs index, agent manifest, permissions, `skill.md`, provenance, and freshness metadata now |
-| MCP | Search, page retrieval, examples, read-only resources, typed tools | Read-only JSON-RPC endpoint with manifest resources and `audit_docs`; auth/streaming next |
+| Machine context | `llms.txt`, `llms-full.txt`, sitemap, page metadata | Generated docs/API indexes, agent manifest, permissions, `skill.md`, provenance, and freshness metadata now |
+| MCP | Search, page retrieval, examples, API operations, read-only resources, typed tools | Read-only JSON-RPC endpoint with docs and OpenAPI resources/tools plus `audit_docs`; auth/streaming next |
 | Access | JWT, OAuth, password gates, page/group rules, roles, SSO-ready boundaries | Concept preview; auth service next |
 | Insights | Visitors, popular pages, failed searches, support deflection, endpoint usage, feedback, agent confidence | Concept preview; self-hosted telemetry next |
 | Releases | Changelog, tags, RSS, announcements, update components | UI preview; content model next |
@@ -32,9 +32,9 @@ This map keeps the promise precise: the landing page shows the intended experien
 
 ## Build order
 
-1. Render the indexed Markdown source into human docs, API reference pages, components, themes, and versioned routes.
+1. Render the indexed Markdown and OpenAPI source into human docs, API reference pages, components, themes, and versioned routes.
 2. Generate `llms.txt`, `llms-full.txt`, agent contracts, sitemap metadata, and the MCP-readable index from the same model.
-3. Add preview builds, link/style checks, hybrid browser editing, and OpenAPI/AsyncAPI/GraphQL contract linting.
+3. Add preview builds, link/style checks, hybrid browser editing, YAML/AsyncAPI/GraphQL contract linting, and richer language tabs.
 4. Add the maintenance scheduler, source/support adapters, drift explanations, and reviewable repair PRs.
 5. Add Assistant citations, feedback, support deflection, endpoint usage, and agent confidence signals.
 6. Add help-center/wiki surfaces, the embedded widget, localization, screenshot checks, migration-safe redirects, and governance.
@@ -50,10 +50,10 @@ The comparison covers hosted AI docs platforms and open-source docs frameworks. 
 
 | Market signal | Common strength | Vessel response | Status |
 | --- | --- | --- | --- |
-| Mintlify | Beautiful components, API playgrounds, Assistant, analytics, versions/localization, agent jobs | Keep the visual quality target while making source, deployment, and agent access portable | API renderer and analytics next |
+| Mintlify | Beautiful components, API playgrounds, Assistant, analytics, versions/localization, agent jobs | Keep the visual quality target while making source, deployment, and agent access portable | OpenAPI reference/preview now; analytics and agent jobs next |
 | GitBook | Git sync plus visual editing, Assistant, Agent, MCP, authenticated publishing | Keep Git as the source of truth and add an explicit agent contract and permission boundary | Agent contract now; visual sync next |
-| Fern | Spec-first API references, SDK workflows, and a documentation MCP server | Add OpenAPI/AsyncAPI ingestion without coupling the docs source to a hosted service | MCP now; API renderer next |
-| ReadMe | API-specific onboarding, auth-aware landing pages, custom content, and management API | Make API contract metadata and runnable examples available to agents and static builds | Contract model now; API reference next |
+| Fern | Spec-first API references, SDK workflows, and a documentation MCP server | Add OpenAPI ingestion without coupling the docs source to a hosted service | MCP and OpenAPI renderer now; SDK workflows next |
+| ReadMe | API-specific onboarding, auth-aware landing pages, custom content, and management API | Make API contract metadata and runnable examples available to agents and static builds | Contract model and generated reference now; auth-aware proxy next |
 | Docusaurus | Open-source versioning, localization, plugin ecosystem, and Git-native builds | Keep the portable build model while adding agent-readable navigation/version metadata | Config contract now; full versions/locales next |
 
 The differentiator is not another hosted chatbot: it is a reproducible documentation build that emits human pages, machine context, permissions, and a quality score from one reviewed source tree.

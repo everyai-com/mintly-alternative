@@ -184,11 +184,11 @@ export const docsIndex = [
     "examples": [
       {
         "language": "bash",
-        "code": "curl \"https://docs.example.com/api/docs/index\"\ncurl \"https://docs.example.com/api/docs/search?q=authentication\""
+        "code": "curl \"https://docs.example.com/api/docs/index\"\ncurl \"https://docs.example.com/api/docs/search?q=authentication\"\ncurl \"https://docs.example.com/api/openapi/index\""
       }
     ],
-    "content": "# Agent context and permissions\n\nAgents should discover a compact map before loading every page. Use the indexed search endpoint or the read-only MCP tools to find the smallest source-grounded context for a task.\n\n## Discover the contract\n\n```bash\ncurl \"https://docs.example.com/api/docs/index\"\ncurl \"https://docs.example.com/api/docs/search?q=authentication\"\n```\n\n## Safe defaults\n\n- Read documentation and examples before proposing a change.\n- Keep repository writes behind a human-reviewed pull request.\n- Cite the page path that supports an answer.\n- Say what is missing when the source does not answer the question.\n\n## MCP discovery\n\nThe Vessel gateway exposes `search_docs`, `get_page`, and `list_examples`. It also exposes each page as a `vessel://docs/<slug>` read-only resource. Mutating tools are intentionally absent until the permission and approval service is in place.",
-    "text": "Agent context and permissions Agents should discover a compact map before loading every page. Use the indexed search endpoint or the read only MCP tools to find the smallest source grounded context for a task. Discover the contract Safe defaults Read documentation and examples before proposing a change. Keep repository writes behind a human reviewed pull request. Cite the page path that supports an answer. Say what is missing when the source does not answer the question. MCP discovery The Vessel gateway exposes search docs , get page , and list examples . It also exposes each page as a vessel://docs/ read only resource. Mutating tools are intentionally absent until the permission and approval service is in place.",
+    "content": "# Agent context and permissions\n\nAgents should discover a compact map before loading every page. Use the indexed search endpoint or the read-only MCP tools to find the smallest source-grounded context for a task.\n\n## Discover the contract\n\n```bash\ncurl \"https://docs.example.com/api/docs/index\"\ncurl \"https://docs.example.com/api/docs/search?q=authentication\"\ncurl \"https://docs.example.com/api/openapi/index\"\n```\n\n## Safe defaults\n\n- Read documentation and examples before proposing a change.\n- Keep repository writes behind a human-reviewed pull request.\n- Cite the page path that supports an answer.\n- Say what is missing when the source does not answer the question.\n\n## MCP discovery\n\nThe Vessel gateway exposes `search_docs`, `get_page`, `list_examples`, `audit_docs`, `list_api_operations`, and `get_api_operation`. It also exposes each page as a `vessel://docs/<slug>` resource and each OpenAPI operation as a `vessel://api/<operationId>` resource. Mutating tools are intentionally absent until the permission and approval service is in place.",
+    "text": "Agent context and permissions Agents should discover a compact map before loading every page. Use the indexed search endpoint or the read only MCP tools to find the smallest source grounded context for a task. Discover the contract Safe defaults Read documentation and examples before proposing a change. Keep repository writes behind a human reviewed pull request. Cite the page path that supports an answer. Say what is missing when the source does not answer the question. MCP discovery The Vessel gateway exposes search docs , get page , list examples , audit docs , list api operations , and get api operation . It also exposes each page as a vessel://docs/ resource and each OpenAPI operation as a vessel://api/ resource. Mutating tools are intentionally absent until the permission and approval service is in place.",
     "source": "content/agent-context.md"
   },
   {
@@ -231,8 +231,8 @@ export const docsIndex = [
         "code": "POST /v1/checkout\nAuthorization: Bearer $VESSEL_API_KEY\nIdempotency-Key: order_123_attempt_1\nContent-Type: application/json\n\n{\"price\":\"price_basic\",\"success_url\":\"https://example.com/success\"}"
       }
     ],
-    "content": "# Checkout API reference\n\nThe checkout endpoint creates a hosted session for a price. Send an idempotency key when the request can be retried by a job or user action.\n\n## Create a checkout session\n\n```http\nPOST /v1/checkout\nAuthorization: Bearer $VESSEL_API_KEY\nIdempotency-Key: order_123_attempt_1\nContent-Type: application/json\n\n{\"price\":\"price_basic\",\"success_url\":\"https://example.com/success\"}\n```\n\nThe response contains an `id`, `url`, and `status`. Store the id and use webhooks as the source of truth for completion.",
-    "text": "Checkout API reference The checkout endpoint creates a hosted session for a price. Send an idempotency key when the request can be retried by a job or user action. Create a checkout session The response contains an id , url , and status . Store the id and use webhooks as the source of truth for completion.",
+    "content": "# Checkout API reference\n\nThe checkout endpoint creates a hosted session for a price. Send an idempotency key when the request can be retried by a job or user action.\n\n## Create a checkout session\n\n```http\nPOST /v1/checkout\nAuthorization: Bearer $VESSEL_API_KEY\nIdempotency-Key: order_123_attempt_1\nContent-Type: application/json\n\n{\"price\":\"price_basic\",\"success_url\":\"https://example.com/success\"}\n```\n\nThe response contains an `id`, `url`, and `status`. Store the id and use webhooks as the source of truth for completion.\n\nFor the generated operation reference, request examples, and safe request preview, open the [API reference](/api/) or fetch the [createCheckoutSession operation](/api/openapi/operation?id=createCheckoutSession).",
+    "text": "Checkout API reference The checkout endpoint creates a hosted session for a price. Send an idempotency key when the request can be retried by a job or user action. Create a checkout session The response contains an id , url , and status . Store the id and use webhooks as the source of truth for completion. For the generated operation reference, request examples, and safe request preview, open the API reference or fetch the createCheckoutSession operation.",
     "source": "content/api-checkout.md"
   }
 ];
@@ -242,6 +242,10 @@ export const siteConfig = {
     "description": "Source-grounded documentation for humans and AI agents.",
     "defaultLocale": "en",
     "defaultVersion": "current"
+  },
+  "repository": {
+    "url": "https://github.com/everyai-com/mintly-alternative",
+    "branch": "main"
   },
   "versions": [
     {
@@ -287,7 +291,9 @@ export const siteConfig = {
       "search_docs",
       "get_page",
       "list_examples",
-      "audit_docs"
+      "audit_docs",
+      "list_api_operations",
+      "get_api_operation"
     ],
     "constraints": [
       "read_only",
@@ -741,11 +747,51 @@ export const agentManifest = {
       ]
     }
   ],
+  "api": {
+    "specs": [
+      {
+        "title": "Vessel API",
+        "version": "2026-08",
+        "description": "A small example contract used to demonstrate Vessel's source-first API reference and request-preview playground.",
+        "openapi": "3.1.0",
+        "source": "openapi/vessel.json",
+        "operations": [
+          "createCheckoutSession",
+          "getCheckoutSession"
+        ]
+      }
+    ],
+    "operations": [
+      {
+        "id": "createCheckoutSession",
+        "method": "POST",
+        "path": "/v1/checkout",
+        "summary": "Create a checkout session",
+        "tags": [
+          "Checkout"
+        ],
+        "source": "openapi/vessel.json"
+      },
+      {
+        "id": "getCheckoutSession",
+        "method": "GET",
+        "path": "/v1/checkout/{session_id}",
+        "summary": "Get a checkout session",
+        "tags": [
+          "Checkout"
+        ],
+        "source": "openapi/vessel.json"
+      }
+    ]
+  },
   "surfaces": {
     "humanDocs": "/docs/",
     "docsIndex": "/api/docs/index",
     "docsSearch": "/api/docs/search?q={query}",
     "docsAudit": "/api/docs/audit",
+    "apiIndex": "/api/openapi/index",
+    "apiOperation": "/api/openapi/operation?id={operationId}",
+    "apiPlayground": "/api/",
     "mcp": "/api/mcp",
     "llms": "/llms.txt",
     "fullContext": "/llms-full.txt",
@@ -779,6 +825,22 @@ export const agentManifest = {
     },
     {
       "name": "audit_docs",
+      "access": "read",
+      "transports": [
+        "http",
+        "mcp"
+      ]
+    },
+    {
+      "name": "list_api_operations",
+      "access": "read",
+      "transports": [
+        "http",
+        "mcp"
+      ]
+    },
+    {
+      "name": "get_api_operation",
       "access": "read",
       "transports": [
         "http",
@@ -1000,6 +1062,8 @@ export const agentPermissions = {
     "docs.page",
     "docs.examples",
     "docs.audit",
+    "api.index",
+    "api.operation",
     "mcp.resources",
     "mcp.tools"
   ],

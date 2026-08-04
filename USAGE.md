@@ -13,7 +13,7 @@ In Site configuration → Environment variables, add:
 - `ALLOW_CUSTOM_ENDPOINTS`: keep `false` on public deployments; set `true` only on a trusted private deployment that intentionally accepts a browser-supplied custom endpoint.
 - `GITHUB_APP_SLUG`: optional; enables `/api/github/install` after you create a public GitHub App.
 
-Netlify Functions expose `/api/assistant`, `/api/docs/index`, `/api/docs/search`, `/api/docs/page`, `/api/docs/audit`, `/api/mcp`, and `/api/github/install` through the redirects in `netlify.toml`.
+Netlify Functions expose `/api/assistant`, `/api/docs/index`, `/api/docs/search`, `/api/docs/page`, `/api/docs/audit`, `/api/openapi/index`, `/api/openapi/operation`, `/api/mcp`, and `/api/github/install` through the redirects in `netlify.toml`. The generated `/api/` reference and operation pages remain static assets.
 
 ## Docs and MCP API
 
@@ -24,11 +24,16 @@ The build reads Markdown files from `content/` and generates a typed index under
 - `GET /api/docs/search?q=checkout`: ranked page search.
 - `GET /api/docs/page?slug=quickstart`: complete page content and examples.
 - `GET /api/docs/audit`: freshness, metadata, examples, navigation, and link health.
+- `GET /api/`: generated OpenAPI reference pages plus the request-preview playground.
+- `GET /api/openapi/index`: the complete OpenAPI-derived operation index.
+- `GET /api/openapi/operation?id=createCheckoutSession`: one operation with parameters, security, request examples, and responses.
 - `POST /api/mcp`: JSON-RPC `initialize`, `tools/list`, `tools/call`, `resources/list`, and `resources/read` for read-only agent access.
+
+OpenAPI files can be JSON, YAML, or YML under `openapi/`. The browser playground is intentionally preview-only: it creates curl/fetch snippets and documented mock responses, but does not send requests or store bearer tokens. Add a separately authenticated proxy only when a deployment has an explicit access-control boundary.
 
 The build also generates `/agent-manifest.json`, `/.well-known/agent-manifest.json`, `/agent-permissions.json`, and `/skill.md`. These are a Vessel-specific agent context contract, not a replacement for the MCP protocol.
 
-The same contracts run through the Cloudflare Worker and Netlify Functions. Run `npm test` to verify both adapters.
+The same docs, API, and MCP contracts run through the Cloudflare Worker and Netlify Functions. Run `npm test` to verify both adapters.
 
 ## Cloudflare Workers
 

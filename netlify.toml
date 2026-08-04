@@ -20,10 +20,15 @@
   force = true
 
 [[redirects]]
+  from = "/api/openapi/*"
+  to = "/.netlify/functions/openapi?path=:splat"
+  status = 200
+  force = true
+
+[[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
   status = 200
-  force = true
 
 [[redirects]]
   from = "/*"

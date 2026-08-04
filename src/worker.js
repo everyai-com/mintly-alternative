@@ -1,5 +1,6 @@
 import { AssistantError, handleAssistantRequest } from "./assistant-core.js";
 import { getDocsAudit, getDocsIndex, getMcpManifest, getPage, handleMcpRequest, searchDocs } from "./docs-core.js";
+import { getApiIndex, getApiOperation } from "./openapi-core.js";
 
 const REPOSITORY_URL = "https://github.com/everyai-com/mintly-alternative";
 
@@ -63,6 +64,15 @@ function docsResponse(request, url) {
   return jsonResponse({ ok: true, page });
 }
 
+function openApiResponse(request, url) {
+  if (request.method !== "GET") return methodNotAllowed(["GET"]);
+  if (url.pathname === "/api/openapi/index") return jsonResponse({ ok: true, ...getApiIndex() });
+  const id = url.searchParams.get("id") || "";
+  const operation = getApiOperation(id);
+  if (!operation) return jsonResponse({ ok: false, code: "operation_not_found", id }, 404);
+  return jsonResponse({ ok: true, operation });
+}
+
 async function mcpResponse(request) {
   if (request.method === "OPTIONS") return new Response(null, { status: 204 });
   if (request.method === "GET") return jsonResponse({ ok: true, ...getMcpManifest() });
@@ -94,6 +104,10 @@ export default {
 
     if (url.pathname === "/api/docs/search" || url.pathname === "/api/docs/page" || url.pathname === "/api/docs/index" || url.pathname === "/api/docs/audit") {
       return docsResponse(request, url);
+    }
+
+    if (url.pathname === "/api/openapi/index" || url.pathname === "/api/openapi/operation") {
+      return openApiResponse(request, url);
     }
 
     if (url.pathname === "/api/mcp") {

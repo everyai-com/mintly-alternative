@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create a checkout session · API reference</title>
+    <meta name="description" content="Create a hosted checkout session for a price and redirect the customer to the returned URL." />
+    <link rel="stylesheet" href="/docs/docs.css" />
+    <link rel="stylesheet" href="/api/api.css" />
+  </head>
+  <body>
+    <main class="docs-shell api-shell">
+      <header class="docs-header"><a class="docs-brand" href="/"><span>V</span> Vessel</a><a class="docs-source" href="/api/">API reference ↗</a></header>
+      <article class="api-operation-page">
+        <div class="api-operation-heading"><span class="api-operation-card__method api-method--post">POST</span><code>/v1/checkout</code></div>
+        <h1>Create a checkout session</h1>
+        <p class="api-operation-lede">Create a hosted checkout session for a price and redirect the customer to the returned URL.</p>
+        <div class="api-operation-meta"><span>Authentication required</span><span>Checkout</span><span>openapi/vessel.json</span></div>
+        <div class="docs-index-actions"><a href="/api/#createCheckoutSession">Open request preview ↗</a><a href="/api/openapi/operation?id=createCheckoutSession">JSON operation ↗</a></div>
+        <section><h2>Parameters</h2><div class="api-parameter-list"><div class="api-parameter"><code>Idempotency-Key</code><span>header · required</span><p>A stable key for safely retrying the same checkout request.</p></div></div></section>
+<section><h2>Request example</h2><pre><code>{
+  &quot;price&quot;: &quot;price_basic&quot;,
+  &quot;success_url&quot;: &quot;https://example.com/success&quot;
+}</code></pre></section>
+<section><h2>Success response · 201</h2><pre><code>{
+  &quot;id&quot;: &quot;cs_123&quot;,
+  &quot;url&quot;: &quot;https://checkout.example.com/cs_123&quot;,
+  &quot;status&quot;: &quot;open&quot;
+}</code></pre></section>
+<section><h2>Schemas</h2><div class="api-schema-grid"><div class="api-schema"><span>Request schema</span><pre><code>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;required&quot;: [
+    &quot;price&quot;,
+    &quot;success_url&quot;
+  ],
+  &quot;properties&quot;: {
+    &quot;price&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;description&quot;: &quot;The price identifier to charge.&quot;,
+      &quot;example&quot;: &quot;price_basic&quot;
+    },
+    &quot;success_url&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uri&quot;,
+      &quot;description&quot;: &quot;Where to send the customer after checkout.&quot;,
+      &quot;example&quot;: &quot;https://example.com/success&quot;
+    }
+  }
+}</code></pre></div><div class="api-schema"><span>Response schema · 201</span><pre><code>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;required&quot;: [
+    &quot;id&quot;,
+    &quot;url&quot;,
+    &quot;status&quot;
+  ],
+  &quot;properties&quot;: {
+    &quot;id&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;example&quot;: &quot;cs_123&quot;
+    },
+    &quot;url&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uri&quot;,
+      &quot;example&quot;: &quot;https://checkout.example.com/cs_123&quot;
+    },
+    &quot;status&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;open&quot;,
+        &quot;complete&quot;,
+        &quot;expired&quot;
+      ],
+      &quot;example&quot;: &quot;open&quot;
+    }
+  }
+}</code></pre></div></div></section>
+<section><h2>Responses</h2><div class="api-response-list"><div class="api-response"><code class="api-response__status api-response__status--success">201</code><span>Checkout session created.</span><small>application/json</small></div><div class="api-response"><code class="api-response__status api-response__status--error">401</code><span>The bearer token is missing or invalid.</span><small>No response body</small></div></div></section>
+      </article>
+    </main>
+  </body>
+</html>

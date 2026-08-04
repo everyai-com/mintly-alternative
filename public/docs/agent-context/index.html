@@ -16,13 +16,15 @@
 <p>Agents should discover a compact map before loading every page. Use the indexed search endpoint or the read-only MCP tools to find the smallest source-grounded context for a task.</p>
 <h2>Discover the contract</h2>
 <pre><code class="language-bash">curl &quot;https://docs.example.com/api/docs/index&quot;
-curl &quot;https://docs.example.com/api/docs/search?q=authentication&quot;</code></pre>
+curl &quot;https://docs.example.com/api/docs/search?q=authentication&quot;
+curl &quot;https://docs.example.com/api/openapi/index&quot;</code></pre>
 <h2>Safe defaults</h2>
 <ul><li>Read documentation and examples before proposing a change.</li><li>Keep repository writes behind a human-reviewed pull request.</li><li>Cite the page path that supports an answer.</li><li>Say what is missing when the source does not answer the question.</li></ul>
 <h2>MCP discovery</h2>
-<p>The Vessel gateway exposes <code>search_docs</code>, <code>get_page</code>, and <code>list_examples</code>. It also exposes each page as a <code>vessel://docs/&lt;slug&gt;</code> read-only resource. Mutating tools are intentionally absent until the permission and approval service is in place.</p><nav class="docs-pagination"><a href="/docs/webhooks/"><span>Previous</span><strong>Verify webhook events</strong></a><a class="next" href="/docs/api-checkout/"><span>Next</span><strong>Checkout API reference</strong></a></nav></article>
+<p>The Vessel gateway exposes <code>search_docs</code>, <code>get_page</code>, <code>list_examples</code>, <code>audit_docs</code>, <code>list_api_operations</code>, and <code>get_api_operation</code>. It also exposes each page as a <code>vessel://docs/&lt;slug&gt;</code> resource and each OpenAPI operation as a <code>vessel://api/&lt;operationId&gt;</code> resource. Mutating tools are intentionally absent until the permission and approval service is in place.</p><nav class="docs-pagination"><a href="/docs/webhooks/"><span>Previous</span><strong>Verify webhook events</strong></a><a class="next" href="/docs/api-checkout/"><span>Next</span><strong>Checkout API reference</strong></a></nav></article>
       </div>
-      <footer class="docs-footer"><span>Generated from content/agent-context.md</span><a href="/api/docs/page?slug=agent-context">JSON page ↗</a></footer>
+      <footer class="docs-footer"><span>Generated from content/agent-context.md</span><div class="docs-footer-links"><a href="https://github.com/everyai-com/mintly-alternative/edit/main/content/agent-context.md" target="_blank" rel="noreferrer">Edit on GitHub ↗</a><a href="/api/docs/page?slug=agent-context">JSON page ↗</a></div></footer>
     </main>
+    <script src="/docs/docs.js"></script>
   </body>
 </html>

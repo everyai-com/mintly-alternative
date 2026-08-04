@@ -1,0 +1,162 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Vessel API",
+    "version": "2026-08",
+    "description": "A small example contract used to demonstrate Vessel's source-first API reference and request-preview playground."
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/checkout": {
+      "post": {
+        "operationId": "createCheckoutSession",
+        "summary": "Create a checkout session",
+        "description": "Create a hosted checkout session for a price and redirect the customer to the returned URL.",
+        "tags": ["Checkout"],
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "description": "A stable key for safely retrying the same checkout request.",
+            "schema": {
+              "type": "string",
+              "example": "order_123_attempt_1"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CheckoutRequest"
+              },
+              "example": {
+                "price": "price_basic",
+                "success_url": "https://example.com/success"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Checkout session created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckoutSession"
+                },
+                "example": {
+                  "id": "cs_123",
+                  "url": "https://checkout.example.com/cs_123",
+                  "status": "open"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "The bearer token is missing or invalid."
+          }
+        }
+      }
+    },
+    "/v1/checkout/{session_id}": {
+      "get": {
+        "operationId": "getCheckoutSession",
+        "summary": "Get a checkout session",
+        "description": "Retrieve the current status of a checkout session.",
+        "tags": ["Checkout"],
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "description": "The checkout session identifier.",
+            "schema": {
+              "type": "string",
+              "example": "cs_123"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Checkout session returned.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CheckoutSession"
+                },
+                "example": {
+                  "id": "cs_123",
+                  "url": "https://checkout.example.com/cs_123",
+                  "status": "complete"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "The session was not found."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "CheckoutRequest": {
+        "type": "object",
+        "required": ["price", "success_url"],
+        "properties": {
+          "price": {
+            "type": "string",
+            "description": "The price identifier to charge.",
+            "example": "price_basic"
+          },
+          "success_url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Where to send the customer after checkout.",
+            "example": "https://example.com/success"
+          }
+        }
+      },
+      "CheckoutSession": {
+        "type": "object",
+        "required": ["id", "url", "status"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "cs_123"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://checkout.example.com/cs_123"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["open", "complete", "expired"],
+            "example": "open"
+          }
+        }
+      }
+    }
+  }
+}

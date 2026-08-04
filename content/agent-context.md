@@ -20,6 +20,7 @@ Agents should discover a compact map before loading every page. Use the indexed 
 ```bash
 curl "https://docs.example.com/api/docs/index"
 curl "https://docs.example.com/api/docs/search?q=authentication"
+curl "https://docs.example.com/api/openapi/index"
 ```
 
 ## Safe defaults
@@ -31,4 +32,4 @@ curl "https://docs.example.com/api/docs/search?q=authentication"
 
 ## MCP discovery
 
-The Vessel gateway exposes `search_docs`, `get_page`, and `list_examples`. It also exposes each page as a `vessel://docs/<slug>` read-only resource. Mutating tools are intentionally absent until the permission and approval service is in place.
+The Vessel gateway exposes `search_docs`, `get_page`, `list_examples`, `audit_docs`, `list_api_operations`, and `get_api_operation`. It also exposes each page as a `vessel://docs/<slug>` resource and each OpenAPI operation as a `vessel://api/<operationId>` resource. Mutating tools are intentionally absent until the permission and approval service is in place.

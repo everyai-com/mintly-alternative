@@ -1,5 +1,6 @@
 import { agentManifest, agentPermissions, docsIndex, docsNavigation, siteConfig } from "./generated/docs-index.js";
 import { auditDocs } from "./docs-audit.js";
+import { getApiIndex, getApiOperation, listApiOperations } from "./openapi-core.js";
 
 const MAX_LIMIT = 20;
 const MCP_PROTOCOL_VERSION = "2025-06-18";
@@ -91,6 +92,8 @@ export function getDocsIndex() {
     locales: siteConfig.locales || [],
     navigation: docsNavigation,
     pages: listPages(),
+    apiReference: "/api/",
+    apiIndex: "/api/openapi/index",
     agentManifest: "/agent-manifest.json",
     permissions: "/agent-permissions.json"
   };
@@ -210,11 +213,34 @@ const MCP_TOOLS = [
       type: "object",
       properties: { maxAgeDays: { type: "integer", minimum: 1, maximum: 3650 } }
     }
+  },
+  {
+    name: "list_api_operations",
+    description: "List API operations generated from the repository OpenAPI contract.",
+    inputSchema: {
+      type: "object",
+      properties: { tag: { type: "string" } }
+    }
+  },
+  {
+    name: "get_api_operation",
+    description: "Retrieve one API operation, parameters, examples, and responses by operation id.",
+    inputSchema: {
+      type: "object",
+      properties: { id: { type: "string", description: "An operation id such as createCheckoutSession." } },
+      required: ["id"]
+    }
   }
 ];
 
 function mcpResources() {
   return [
+    {
+      uri: "vessel://api/index",
+      name: "Vessel API operation index",
+      description: "The OpenAPI-derived operation map and request examples.",
+      mimeType: "application/json"
+    },
     {
       uri: "vessel://agent-manifest",
       name: "Vessel agent manifest",
@@ -227,6 +253,12 @@ function mcpResources() {
       description: "The read-only permission boundary for agent access.",
       mimeType: "application/json"
     },
+    ...listApiOperations().map((operation) => ({
+      uri: `vessel://api/${operation.id}`,
+      name: `${operation.method} ${operation.path}`,
+      description: operation.summary,
+      mimeType: "application/json"
+    })),
     ...listPages().map((page) => ({
       uri: `vessel://docs/${page.slug}`,
       name: page.title,
@@ -285,7 +317,7 @@ export function handleMcpRequest(request) {
       return success(request, {
         protocolVersion: MCP_PROTOCOL_VERSION,
         capabilities: { tools: { listChanged: false }, resources: { subscribe: false, listChanged: false } },
-        serverInfo: { name: "vessel-docs", version: "0.3.0" },
+        serverInfo: { name: "vessel-docs", version: "0.4.0" },
         instructions: "Vessel exposes read-only, source-grounded documentation tools. Cite the returned page paths in answers."
       });
     case "notifications/initialized":
@@ -298,8 +330,15 @@ export function handleMcpRequest(request) {
       return success(request, { resources: mcpResources() });
     case "resources/read": {
       const uri = String(params.uri || "");
+      if (uri === "vessel://api/index") return success(request, { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(getApiIndex(), null, 2) }] });
       if (uri === "vessel://agent-manifest") return success(request, { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(agentManifest, null, 2) }] });
       if (uri === "vessel://agent-permissions") return success(request, { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(agentPermissions, null, 2) }] });
+      const apiPrefix = "vessel://api/";
+      if (uri.startsWith(apiPrefix)) {
+        const operation = getApiOperation(uri.slice(apiPrefix.length));
+        if (!operation) return failure(request, -32004, "API operation not found.");
+        return success(request, { contents: [{ uri, mimeType: "application/json", text: JSON.stringify(operation, null, 2) }] });
+      }
       const prefix = "vessel://docs/";
       if (!uri.startsWith(prefix)) return failure(request, -32602, "The resource URI must start with vessel://docs/.");
       let slug;
@@ -326,6 +365,16 @@ export function handleMcpRequest(request) {
       }
       if (name === "list_examples") return toolResult(request, { examples: listExamples(args.query, args.limit) });
       if (name === "audit_docs") return toolResult(request, getDocsAudit({ maxAgeDays: args.maxAgeDays }));
+      if (name === "list_api_operations") {
+        const tag = String(args.tag || "").trim().toLowerCase();
+        const operations = listApiOperations().filter((operation) => !tag || operation.tags.some((item) => item.toLowerCase() === tag));
+        return toolResult(request, { operations });
+      }
+      if (name === "get_api_operation") {
+        const operation = getApiOperation(args.id);
+        if (!operation) return toolResult(request, { error: "operation_not_found", id: args.id || "" }, true);
+        return toolResult(request, operation);
+      }
       return failure(request, -32601, `Unknown tool: ${name}`);
     }
     default:

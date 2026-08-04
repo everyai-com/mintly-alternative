@@ -10,9 +10,10 @@ Vessel is an open-source, static-first documentation layer for humans and AI age
 - src/styles.css contains all visual styling and responsive layout rules.
 - src/main.js contains surface switching, copy feedback, mobile navigation, the local agent query demo, provider settings, and the maintenance audit feed.
 - src/assistant-core.js contains the provider-neutral BYOK adapter shared by the Worker and Netlify Function.
-- docs.config.json, src/docs-parser.js, src/docs-core.js, src/docs-audit.js, content/, and scripts/ contain the source compiler, navigation model, quality audit, indexed search, page retrieval, and MCP contract.
+- docs.config.json, src/docs-parser.js, src/docs-core.js, src/docs-audit.js, src/openapi-parser.js, src/openapi-core.js, content/, openapi/, and scripts/ contain the source compiler, navigation model, quality audit, indexed search, page retrieval, OpenAPI reference, and MCP contract.
 - src/worker.js is the Cloudflare Worker entrypoint for static assets, docs APIs, the read-only assistant gateway, and /health.
-- netlify/functions/docs.mjs and netlify/functions/mcp.mjs mirror the Worker docs APIs on Netlify.
+- netlify/functions/docs.mjs, netlify/functions/openapi.mjs, and netlify/functions/mcp.mjs mirror the Worker docs/API/MCP contracts on Netlify.
+- public/api/ contains generated API JSON, operation pages, and the safe request-preview explorer; edit openapi/* instead of generated files.
 - public/llms.txt, public/llms-full.txt, public/agent-manifest.json, public/agent-permissions.json, public/skill.md, and public/.well-known/agent-manifest.json are generated machine-readable context artifacts.
 - netlify.toml, netlify/functions/, and wrangler.jsonc keep both deploy paths configured.
 

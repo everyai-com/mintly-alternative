@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Get a checkout session · API reference</title>
+    <meta name="description" content="Retrieve the current status of a checkout session." />
+    <link rel="stylesheet" href="/docs/docs.css" />
+    <link rel="stylesheet" href="/api/api.css" />
+  </head>
+  <body>
+    <main class="docs-shell api-shell">
+      <header class="docs-header"><a class="docs-brand" href="/"><span>V</span> Vessel</a><a class="docs-source" href="/api/">API reference ↗</a></header>
+      <article class="api-operation-page">
+        <div class="api-operation-heading"><span class="api-operation-card__method api-method--get">GET</span><code>/v1/checkout/{session_id}</code></div>
+        <h1>Get a checkout session</h1>
+        <p class="api-operation-lede">Retrieve the current status of a checkout session.</p>
+        <div class="api-operation-meta"><span>Authentication required</span><span>Checkout</span><span>openapi/vessel.json</span></div>
+        <div class="docs-index-actions"><a href="/api/#getCheckoutSession">Open request preview ↗</a><a href="/api/openapi/operation?id=getCheckoutSession">JSON operation ↗</a></div>
+        <section><h2>Parameters</h2><div class="api-parameter-list"><div class="api-parameter"><code>session_id</code><span>path · required</span><p>The checkout session identifier.</p></div></div></section>
+<section><h2>Success response · 200</h2><pre><code>{
+  &quot;id&quot;: &quot;cs_123&quot;,
+  &quot;url&quot;: &quot;https://checkout.example.com/cs_123&quot;,
+  &quot;status&quot;: &quot;complete&quot;
+}</code></pre></section>
+<section><h2>Schemas</h2><div class="api-schema-grid"><div class="api-schema"><span>Response schema · 200</span><pre><code>{
+  &quot;type&quot;: &quot;object&quot;,
+  &quot;required&quot;: [
+    &quot;id&quot;,
+    &quot;url&quot;,
+    &quot;status&quot;
+  ],
+  &quot;properties&quot;: {
+    &quot;id&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;example&quot;: &quot;cs_123&quot;
+    },
+    &quot;url&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;format&quot;: &quot;uri&quot;,
+      &quot;example&quot;: &quot;https://checkout.example.com/cs_123&quot;
+    },
+    &quot;status&quot;: {
+      &quot;type&quot;: &quot;string&quot;,
+      &quot;enum&quot;: [
+        &quot;open&quot;,
+        &quot;complete&quot;,
+        &quot;expired&quot;
+      ],
+      &quot;example&quot;: &quot;open&quot;
+    }
+  }
+}</code></pre></div></div></section>
+<section><h2>Responses</h2><div class="api-response-list"><div class="api-response"><code class="api-response__status api-response__status--success">200</code><span>Checkout session returned.</span><small>application/json</small></div><div class="api-response"><code class="api-response__status api-response__status--error">404</code><span>The session was not found.</span><small>No response body</small></div></div></section>
+      </article>
+    </main>
+  </body>
+</html>
