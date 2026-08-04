@@ -8,6 +8,17 @@ Vessel is designed around the idea that documentation is now an interface. A hum
 
 The project is intentionally static-first. A docs build can be hosted on a CDN, a server, an object store, Cloudflare Workers, or Netlify. An optional edge gateway exposes health checks, docs retrieval, and a read-only MCP endpoint without forcing a hosted control plane or a required account.
 
+## Fast local start
+
+```sh
+npm install
+npm run setup
+npm run doctor
+npm run dev
+```
+
+`npm run setup` creates `.env` from `.env.example` without overwriting local settings. `npm run doctor -- --full` runs the complete build and test gate. No provider key is required for the static docs, API reference, or read-only MCP surfaces.
+
 ## Generated surfaces
 
 Human docs are a readable, searchable web experience for guides, concepts, API reference, examples, and changelogs.

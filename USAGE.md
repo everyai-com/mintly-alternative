@@ -1,6 +1,14 @@
 # Vessel deployment setup
 
-This file is shown by Netlify after the one-click template flow. The site works without an AI key as a static documentation demo; the key only enables live Assistant responses.
+This file is shown by Netlify after the one-click template flow. For the shortest path, see [GETTING_STARTED.md](GETTING_STARTED.md). The site works without an AI key as a static documentation demo; the key only enables live Assistant responses.
+
+## First five minutes
+
+1. Click the Cloudflare or Netlify deploy button in the README.
+2. Wait for the first build to finish; no database or provider key is required.
+3. Add `AI_PROVIDER`, `AI_MODEL`, and `AI_API_KEY` only if you want live Assistant answers.
+4. Put Markdown in `content/` and OpenAPI JSON/YAML/YML in `openapi/`.
+5. Push a commit and let the host rebuild the generated docs, API, agent, and MCP surfaces.
 
 ## Netlify
 

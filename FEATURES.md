@@ -29,6 +29,7 @@ This map keeps the promise precise: the landing page shows the intended experien
 | Integrations | GitHub/GitLab, Slack, webhooks, browser extension, support tools, admin API, CI checks | Roadmap |
 | Hosting | Netlify, Cloudflare Workers, static export, own infrastructure | Build/deploy scaffold + Worker/Function APIs now |
 | GitHub | One-click source connection, optional GitHub App, commit previews, reviewable PRs | One-click source flow + install route scaffold; App setup next |
+| Onboarding | Guided local setup, environment templates, health checks, one-command verification | `npm run setup`, `npm run doctor`, and `npm run verify` now |
 
 ## Build order
 

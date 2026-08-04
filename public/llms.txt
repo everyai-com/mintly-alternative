@@ -19,6 +19,7 @@
 - [Maintenance](/#maintenance): Detect code, product, support, visual, and semantic drift; explain changes; and hold generated patches for review.
 - [Deployment](/#deploy): Deploy with Cloudflare Workers, Netlify, or any static host.
 - [Source and setup](/#source): Open-source project direction and starter command.
+- [Getting started](https://github.com/everyai-com/mintly-alternative/blob/main/GETTING_STARTED.md): Clone, configure, verify, and deploy Vessel in a few minutes.
 
 ## Concepts
 

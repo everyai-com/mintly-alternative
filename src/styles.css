@@ -3774,6 +3774,91 @@ button {
   color: #9db1a4;
 }
 
+.deploy-quickstart {
+  display: grid;
+  grid-template-columns: minmax(190px, 0.75fr) minmax(0, 1.7fr);
+  gap: 22px;
+  align-items: center;
+  margin-top: 52px;
+  padding: 15px;
+  border: 1px solid rgba(218, 238, 225, 0.16);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.deploy-quickstart__intro {
+  display: grid;
+  gap: 10px;
+  padding: 4px 8px;
+}
+
+.deploy-quickstart__intro .deploy-card__tag {
+  margin-top: 0;
+  background: rgba(216, 255, 79, 0.12);
+  color: #b9d2bd;
+}
+
+.deploy-quickstart__intro strong {
+  color: #eff7ee;
+  font-size: 17px;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+
+.deploy-quickstart__intro a {
+  color: var(--lime);
+  font-size: 10px;
+  font-weight: 760;
+}
+
+.deploy-quickstart__intro a:hover {
+  color: #eff7ee;
+}
+
+.deploy-quickstart__steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.deploy-quickstart__steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 62px;
+  padding: 12px;
+  border: 1px solid rgba(218, 238, 225, 0.11);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.deploy-quickstart__steps li > span {
+  color: var(--lime);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 9px;
+  font-weight: 850;
+}
+
+.deploy-quickstart__steps div {
+  display: grid;
+  gap: 5px;
+}
+
+.deploy-quickstart__steps strong {
+  color: #eff7ee;
+  font-size: 11px;
+  letter-spacing: -0.025em;
+}
+
+.deploy-quickstart__steps small {
+  color: #8fa99a;
+  font-size: 9px;
+  line-height: 1.35;
+}
+
 .deploy-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -4551,6 +4636,16 @@ button {
   .deploy-head > p {
     max-width: 520px;
     margin-top: 22px;
+  }
+
+  .deploy-quickstart {
+    display: block;
+    margin-top: 42px;
+  }
+
+  .deploy-quickstart__steps {
+    grid-template-columns: 1fr;
+    margin-top: 14px;
   }
 
   .workflow-list {
