@@ -4,6 +4,12 @@ description: Verify signatures, preserve event ids, and acknowledge webhooks qui
 section: Guides
 order: 3
 tags: [webhooks, events, security, retries]
+audience: [developer, coding-agent]
+related: [quickstart, api-checkout]
+version: current
+locale: en
+updated: 2026-08-04
+stability: stable
 ---
 # Verify webhook events
 

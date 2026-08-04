@@ -1,4 +1,4 @@
-import { getPage, listPages, searchDocs } from "../../src/docs-core.js";
+import { getDocsAudit, getDocsIndex, getPage, searchDocs } from "../../src/docs-core.js";
 
 export default async function handler(event) {
   if (event.httpMethod === "OPTIONS") return { statusCode: 204, body: "" };
@@ -11,7 +11,12 @@ export default async function handler(event) {
     return json({ ok: true, query, results: searchDocs(query, limit) });
   }
 
-  if (route === "index") return json({ ok: true, version: 1, pages: listPages() });
+  if (route === "index") return json({ ok: true, ...getDocsIndex() });
+
+  if (route === "audit") {
+    const maxAgeDays = event.queryStringParameters?.maxAgeDays;
+    return json({ ok: true, audit: getDocsAudit(maxAgeDays ? { maxAgeDays } : {}) });
+  }
 
   if (route === "page") {
     const slug = event.queryStringParameters?.slug || "";
@@ -20,7 +25,7 @@ export default async function handler(event) {
     return json({ ok: true, page });
   }
 
-  return json({ ok: false, code: "unknown_docs_route", message: "Use /api/docs/index, /api/docs/search, or /api/docs/page." }, 404);
+  return json({ ok: false, code: "unknown_docs_route", message: "Use /api/docs/index, /api/docs/search, /api/docs/page, or /api/docs/audit." }, 404);
 }
 
 function json(payload, statusCode = 200) {

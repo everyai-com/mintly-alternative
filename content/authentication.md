@@ -4,6 +4,12 @@ description: Keep API credentials server-side and rotate them without breaking a
 section: Guides
 order: 2
 tags: [authentication, security, keys, tokens]
+audience: [developer, coding-agent]
+related: [quickstart, api-checkout]
+version: current
+locale: en
+updated: 2026-08-04
+stability: stable
 ---
 # Authentication and key rotation
 

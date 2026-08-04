@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "vessel.agent-permissions/v1",
+  "default": "deny",
+  "read": [
+    "docs.index",
+    "docs.search",
+    "docs.page",
+    "docs.examples",
+    "docs.audit",
+    "mcp.resources",
+    "mcp.tools"
+  ],
+  "write": [],
+  "requiresHumanApproval": [
+    "repository.write",
+    "content.publish",
+    "provider.request"
+  ],
+  "notes": "This contract is read-only. Repository or publishing changes require a separate human-reviewed workflow."
+}

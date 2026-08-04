@@ -4,6 +4,12 @@ description: Create and expire checkout sessions with the API contract close to 
 section: API reference
 order: 5
 tags: [api, checkout, reference, idempotency]
+audience: [developer, coding-agent]
+related: [authentication, webhooks]
+version: current
+locale: en
+updated: 2026-08-04
+stability: stable
 ---
 # Checkout API reference
 

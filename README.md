@@ -5,11 +5,12 @@ Vessel is an open-source, self-hostable documentation layer for the teams buildi
 - human docs that are readable and fast;
 - llms.txt and llms-full.txt context for AI systems;
 - an MCP-ready surface for discoverable resources and tools;
+- a generated agent manifest, permission contract, and `skill.md` workflow;
 - repo-native agent instructions and runnable examples;
 - a maintenance layer that detects drift, mines support gaps, and routes explainable changes through review;
 - a provider-neutral AI Assistant with BYOK support for OpenRouter, OpenAI, Anthropic, and custom OpenAI-compatible endpoints.
 
-This repository contains the product landing page, a Markdown source compiler, a generated docs index, grounded search, read-only MCP tools, and a static-first deployment scaffold. The interactive previews are intentionally local and dependency-light while the authenticated control plane, analytics, and maintenance services are being designed in public.
+This repository contains the product landing page, a Markdown source compiler, config-driven navigation/version metadata, a generated agent contract, grounded search, a read-only docs audit, read-only MCP tools, and a static-first deployment scaffold. The interactive previews are intentionally local and dependency-light while the authenticated control plane, analytics, and maintenance services are being designed in public.
 
 See [FEATURES.md](FEATURES.md) for the Mintlify-class feature inventory, current demo coverage, and the implementation order for the open-source product.
 
@@ -25,7 +26,7 @@ Build and preview the production bundle:
 
 The Cloudflare Worker also exposes GET /health after deployment.
 
-The functional docs surface is available at `GET /docs/`, `GET /api/docs/index`, `GET /api/docs/search?q=checkout`, `GET /api/docs/page?slug=quickstart`, and `POST /api/mcp`. Netlify exposes the same routes through its Functions redirects.
+The functional docs surface is available at `GET /docs/`, `GET /api/docs/index`, `GET /api/docs/search?q=checkout`, `GET /api/docs/page?slug=quickstart`, `GET /api/docs/audit`, `GET /agent-manifest.json`, and `POST /api/mcp`. Netlify exposes the same routes through its Functions redirects.
 
 ## Deploy
 
@@ -61,6 +62,10 @@ OpenRouter is a useful default because it exposes an OpenAI-compatible chat API 
 
 The source repository is [everyai-com/mintly-alternative](https://github.com/everyai-com/mintly-alternative). One-click deployment keeps GitHub in the loop for future pushes and previews. The optional GitHub App installer route is documented in [GITHUB.md](GITHUB.md) and intentionally stays disabled until `GITHUB_APP_SLUG` is configured.
 
+## Agent contract and docs quality
+
+`docs.config.json` is the portable site contract for navigation, versions, locales, agent capabilities, constraints, and freshness policy. `npm run docs:check` catches broken internal links, missing metadata, stale pages, missing examples, and navigation drift before a deployment. The generated `agent-manifest.json`, `agent-permissions.json`, and `skill.md` give coding agents an explicit read-only workflow instead of relying on page scraping or model memory.
+
 ## UI architecture
 
 The public page is deliberately framework-light for fast, portable self-hosting. shadcn/ui is a good open-source choice for the next authenticated editor/control plane because it distributes editable component source under MIT; see [SHADCN.md](SHADCN.md) for the decision and boundary.
@@ -75,10 +80,10 @@ The first version is being shaped around three recurring needs in agent-facing d
 
 The product roadmap is:
 
-- browser editing, MDX components, and navigation generation on top of the current Markdown compiler;
+- browser editing and MDX components on top of the current Markdown compiler and config-driven navigation/version contract;
 - built-in components, themes, custom domains, and browser editing;
 - OpenAPI/AsyncAPI reference rendering with an interactive playground;
-- generated llms.txt, full-context exports, and an Assistant with richer citations and analytics;
+- generated llms.txt, full-context exports, agent contracts, quality audits, and an Assistant with richer citations and analytics;
 - content drift detection, scheduled semantic audits, support-ticket adapters, and suggested reviewable PRs;
 - a hybrid Git/visual editor with bidirectional sync, comments, previews, and GraphQL/style linting;
 - public docs, customer help center, private wiki, embedded help widget, versions, localization, screenshots, and migration-safe redirects;
@@ -108,6 +113,12 @@ The product shape is informed by the current agent-doc primitives:
 - Mintlify documents Assistant citations and agentic retrieval: https://mintlify.com/docs/guides/assistant
 - Mintlify documents search, feedback, and analytics: https://mintlify.com/docs/guides/analytics
 - Mintlify documents the research-to-PR Agent workflow: https://www.mintlify.com/docs/agent
+- GitBook documents Git sync, Assistant, Agent, and MCP: https://gitbook.com/docs
+- GitBook documents extending Assistant with external MCP servers: https://gitbook.com/docs/publishing-documentation/gitbook-assistant
+- Fern documents its documentation MCP server: https://buildwithfern.com/learn/docs/ai-features/mcp-server
+- ReadMe documents API reference landing pages with authentication-aware setup: https://docs.readme.com/main/docs/reference-core-pages
+- Docusaurus documents versioning: https://docusaurus.io/docs/versioning
+- Docusaurus documents Git-based localization: https://docusaurus.io/docs/i18n/tutorial
 
 ## License
 

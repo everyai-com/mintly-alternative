@@ -1,5 +1,5 @@
 import { AssistantError, handleAssistantRequest } from "./assistant-core.js";
-import { getMcpManifest, getPage, handleMcpRequest, listPages, searchDocs } from "./docs-core.js";
+import { getDocsAudit, getDocsIndex, getMcpManifest, getPage, handleMcpRequest, searchDocs } from "./docs-core.js";
 
 const REPOSITORY_URL = "https://github.com/everyai-com/mintly-alternative";
 
@@ -49,7 +49,12 @@ function docsResponse(request, url) {
   }
 
   if (url.pathname === "/api/docs/index") {
-    return jsonResponse({ ok: true, version: 1, pages: listPages() });
+    return jsonResponse({ ok: true, ...getDocsIndex() });
+  }
+
+  if (url.pathname === "/api/docs/audit") {
+    const maxAgeDays = url.searchParams.get("maxAgeDays");
+    return jsonResponse({ ok: true, audit: getDocsAudit(maxAgeDays ? { maxAgeDays } : {}) });
   }
 
   const slug = url.searchParams.get("slug") || "";
@@ -87,7 +92,7 @@ export default {
       return assistantResponse(request, env);
     }
 
-    if (url.pathname === "/api/docs/search" || url.pathname === "/api/docs/page" || url.pathname === "/api/docs/index") {
+    if (url.pathname === "/api/docs/search" || url.pathname === "/api/docs/page" || url.pathname === "/api/docs/index" || url.pathname === "/api/docs/audit") {
       return docsResponse(request, url);
     }
 
