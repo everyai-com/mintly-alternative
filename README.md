@@ -26,7 +26,9 @@ Build and preview the production bundle:
 
 The Cloudflare Worker also exposes GET /health after deployment.
 
-The functional docs surface is available at `GET /docs/`, `GET /api/docs/index`, `GET /api/docs/search?q=checkout`, `GET /api/docs/page?slug=quickstart`, `GET /api/docs/audit`, `GET /agent-manifest.json`, and `POST /api/mcp`. Netlify exposes the same routes through its Functions redirects.
+The functional docs surface is available at `GET /docs/`, `GET /api/docs/index`, `GET /api/docs/search?q=checkout`, `GET /api/docs/page?slug=quickstart`, `GET /api/docs/audit`, `GET /api/` for the generated API reference and safe request preview, `GET /api/openapi/index`, `GET /api/openapi/operation?id=createCheckoutSession`, `GET /agent-manifest.json`, and `POST /api/mcp`. Netlify exposes the same contracts through its Functions redirects.
+
+Put OpenAPI JSON, YAML, or YML contracts in [`openapi/`](openapi/). `npm run docs:build` turns them into static operation pages, JSON artifacts, MCP resources, and request examples. The playground builds curl/fetch snippets and previews documented responses; it deliberately does not proxy arbitrary authenticated requests from a public docs site.
 
 ## Deploy
 
@@ -82,7 +84,7 @@ The product roadmap is:
 
 - browser editing and MDX components on top of the current Markdown compiler and config-driven navigation/version contract;
 - built-in components, themes, custom domains, and browser editing;
-- OpenAPI/AsyncAPI reference rendering with an interactive playground;
+- OpenAPI/AsyncAPI reference rendering; the current OpenAPI JSON/YAML path already generates reference pages, examples, MCP operations, and a safe request-preview playground;
 - generated llms.txt, full-context exports, agent contracts, quality audits, and an Assistant with richer citations and analytics;
 - content drift detection, scheduled semantic audits, support-ticket adapters, and suggested reviewable PRs;
 - a hybrid Git/visual editor with bidirectional sync, comments, previews, and GraphQL/style linting;

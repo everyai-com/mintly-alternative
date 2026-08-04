@@ -5,6 +5,10 @@
     "defaultLocale": "en",
     "defaultVersion": "current"
   },
+  "repository": {
+    "url": "https://github.com/everyai-com/mintly-alternative",
+    "branch": "main"
+  },
   "versions": [
     {
       "id": "current",
@@ -34,7 +38,7 @@
     "name": "Vessel documentation agent contract",
     "description": "A read-only, source-grounded contract for coding agents and documentation tools.",
     "audiences": ["developer", "coding-agent", "support-agent"],
-    "capabilities": ["search_docs", "get_page", "list_examples", "audit_docs"],
+    "capabilities": ["search_docs", "get_page", "list_examples", "audit_docs", "list_api_operations", "get_api_operation"],
     "constraints": [
       "read_only",
       "cite_source_paths",

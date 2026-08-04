@@ -231,11 +231,51 @@
       ]
     }
   ],
+  "api": {
+    "specs": [
+      {
+        "title": "Vessel API",
+        "version": "2026-08",
+        "description": "A small example contract used to demonstrate Vessel's source-first API reference and request-preview playground.",
+        "openapi": "3.1.0",
+        "source": "openapi/vessel.json",
+        "operations": [
+          "createCheckoutSession",
+          "getCheckoutSession"
+        ]
+      }
+    ],
+    "operations": [
+      {
+        "id": "createCheckoutSession",
+        "method": "POST",
+        "path": "/v1/checkout",
+        "summary": "Create a checkout session",
+        "tags": [
+          "Checkout"
+        ],
+        "source": "openapi/vessel.json"
+      },
+      {
+        "id": "getCheckoutSession",
+        "method": "GET",
+        "path": "/v1/checkout/{session_id}",
+        "summary": "Get a checkout session",
+        "tags": [
+          "Checkout"
+        ],
+        "source": "openapi/vessel.json"
+      }
+    ]
+  },
   "surfaces": {
     "humanDocs": "/docs/",
     "docsIndex": "/api/docs/index",
     "docsSearch": "/api/docs/search?q={query}",
     "docsAudit": "/api/docs/audit",
+    "apiIndex": "/api/openapi/index",
+    "apiOperation": "/api/openapi/operation?id={operationId}",
+    "apiPlayground": "/api/",
     "mcp": "/api/mcp",
     "llms": "/llms.txt",
     "fullContext": "/llms-full.txt",
@@ -269,6 +309,22 @@
     },
     {
       "name": "audit_docs",
+      "access": "read",
+      "transports": [
+        "http",
+        "mcp"
+      ]
+    },
+    {
+      "name": "list_api_operations",
+      "access": "read",
+      "transports": [
+        "http",
+        "mcp"
+      ]
+    },
+    {
+      "name": "get_api_operation",
       "access": "read",
       "transports": [
         "http",

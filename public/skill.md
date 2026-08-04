@@ -32,6 +32,8 @@ Use this skill when answering questions about Vessel or implementing against its
 ## Machine surfaces
 
 - MCP: [/api/mcp](/api/mcp)
+- API reference and request preview: [/api/](/api/)
+- API operation index: [/api/openapi/index](/api/openapi/index)
 - Manifest: [/agent-manifest.json](/agent-manifest.json)
 - Permissions: [/agent-permissions.json](/agent-permissions.json)
 - Full context: [/llms-full.txt](/llms-full.txt)

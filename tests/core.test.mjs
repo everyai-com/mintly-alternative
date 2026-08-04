@@ -4,8 +4,11 @@ import worker from "../src/worker.js";
 import { handleAssistantRequest } from "../src/assistant-core.js";
 import { auditDocs } from "../src/docs-audit.js";
 import { buildGroundedContext, getAgentManifest, getDocsIndex, getPage, handleMcpRequest, listExamples, listPages, searchDocs } from "../src/docs-core.js";
+import { getApiIndex, getApiOperation, listApiOperations } from "../src/openapi-core.js";
+import { parseOpenApi } from "../src/openapi-parser.js";
 import docsFunction from "../netlify/functions/docs.mjs";
 import mcpFunction from "../netlify/functions/mcp.mjs";
+import openapiFunction from "../netlify/functions/openapi.mjs";
 
 const assets = { fetch: async () => new Response("Not found", { status: 404 }) };
 const env = { ASSETS: assets };
@@ -33,11 +36,25 @@ test("publishes a versioned agent contract and passing docs audit", () => {
   assert.equal(index.versions[0].id, "current");
   assert.equal(index.navigation.length, 2);
   assert.equal(getAgentManifest().surfaces.skill, "/skill.md");
+  assert.equal(getAgentManifest().api.operations.length, 2);
 
   const audit = auditDocs({ now: new Date("2026-08-04T00:00:00Z") });
   assert.equal(audit.status, "pass");
   assert.equal(audit.score, 100);
   assert.equal(audit.counts.errors, 0);
+});
+
+test("indexes OpenAPI JSON and YAML operations with examples", () => {
+  const index = getApiIndex();
+  assert.equal(index.operations.length, 2);
+  assert.equal(getApiOperation("createCheckoutSession").method, "POST");
+  assert.equal(getApiOperation("createCheckoutSession").requestBody.example.price, "price_basic");
+  assert.equal(getApiOperation("createCheckoutSession").requestBody.schema.properties.price.type, "string");
+  assert.ok(listApiOperations().some((operation) => operation.path === "/v1/checkout/{session_id}"));
+
+  const yaml = parseOpenApi(`openapi: 3.0.0\ninfo:\n  title: Example\n  version: 1.0.0\npaths:\n  /health:\n    get:\n      operationId: healthCheck\n      responses:\n        '200':\n          description: OK\n`, "example.yaml");
+  assert.equal(yaml.operations[0].id, "healthCheck");
+  assert.equal(yaml.operations[0].method, "GET");
 });
 
 test("builds assistant context with source paths", () => {
@@ -75,7 +92,7 @@ test("exposes read-only MCP discovery and tools", () => {
   assert.equal(initialized.result.serverInfo.name, "vessel-docs");
 
   const tools = handleMcpRequest({ jsonrpc: "2.0", id: 2, method: "tools/list", params: {} });
-  assert.deepEqual(tools.result.tools.map((tool) => tool.name), ["search_docs", "get_page", "list_examples", "audit_docs"]);
+  assert.deepEqual(tools.result.tools.map((tool) => tool.name), ["search_docs", "get_page", "list_examples", "audit_docs", "list_api_operations", "get_api_operation"]);
 
   const search = handleMcpRequest({ jsonrpc: "2.0", id: 3, method: "tools/call", params: { name: "search_docs", arguments: { query: "checkout" } } });
   assert.equal(search.result.isError, false);
@@ -89,6 +106,13 @@ test("exposes read-only MCP discovery and tools", () => {
 
   const audit = handleMcpRequest({ jsonrpc: "2.0", id: 6, method: "tools/call", params: { name: "audit_docs", arguments: {} } });
   assert.equal(audit.result.structuredContent.status, "pass");
+
+  const api = handleMcpRequest({ jsonrpc: "2.0", id: 7, method: "tools/call", params: { name: "get_api_operation", arguments: { id: "createCheckoutSession" } } });
+  assert.equal(api.result.structuredContent.method, "POST");
+  assert.match(api.result.structuredContent.requestBody.example.price, /price_basic/);
+
+  const apiResource = handleMcpRequest({ jsonrpc: "2.0", id: 8, method: "resources/read", params: { uri: "vessel://api/createCheckoutSession" } });
+  assert.match(apiResource.result.contents[0].text, /Create a checkout session/);
 });
 
 test("Cloudflare routes expose search, page retrieval, and MCP", async () => {
@@ -109,6 +133,14 @@ test("Cloudflare routes expose search, page retrieval, and MCP", async () => {
   const pageResponse = await worker.fetch(new Request("https://vessel.test/api/docs/page?slug=authentication"), env);
   assert.equal(pageResponse.status, 200);
   assert.equal((await pageResponse.json()).page.slug, "authentication");
+
+  const apiResponse = await worker.fetch(new Request("https://vessel.test/api/openapi/index"), env);
+  assert.equal(apiResponse.status, 200);
+  assert.equal((await apiResponse.json()).operations.length, 2);
+
+  const operationResponse = await worker.fetch(new Request("https://vessel.test/api/openapi/operation?id=createCheckoutSession"), env);
+  assert.equal(operationResponse.status, 200);
+  assert.equal((await operationResponse.json()).operation.method, "POST");
 
   const mcpResponse = await worker.fetch(new Request("https://vessel.test/api/mcp", {
     method: "POST",
@@ -146,9 +178,23 @@ test("Netlify Functions expose the same docs and MCP contracts", async () => {
     body: JSON.stringify({ jsonrpc: "2.0", id: 8, method: "resources/list", params: {} })
   });
   assert.equal(mcpResponse.statusCode, 200);
-  assert.equal(JSON.parse(mcpResponse.body).result.resources.length, 7);
+  assert.equal(JSON.parse(mcpResponse.body).result.resources.length, 10);
 
   const manifestResponse = await mcpFunction({ httpMethod: "GET", queryStringParameters: {} });
   assert.equal(manifestResponse.statusCode, 200);
-  assert.deepEqual(JSON.parse(manifestResponse.body).tools, ["search_docs", "get_page", "list_examples", "audit_docs"]);
+  assert.deepEqual(JSON.parse(manifestResponse.body).tools, ["search_docs", "get_page", "list_examples", "audit_docs", "list_api_operations", "get_api_operation"]);
+
+  const apiResponse = await openapiFunction({
+    httpMethod: "GET",
+    queryStringParameters: { path: "index" }
+  });
+  assert.equal(apiResponse.statusCode, 200);
+  assert.equal(JSON.parse(apiResponse.body).operations.length, 2);
+
+  const operationResponse = await openapiFunction({
+    httpMethod: "GET",
+    queryStringParameters: { path: "operation", id: "getCheckoutSession" }
+  });
+  assert.equal(operationResponse.statusCode, 200);
+  assert.equal(JSON.parse(operationResponse.body).operation.method, "GET");
 });

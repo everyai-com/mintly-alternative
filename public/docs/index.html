@@ -14,24 +14,26 @@
         <span class="docs-kicker">Source index · 5 pages · current</span>
         <h1>Documentation for humans and agents.</h1>
         <p>Every page starts as readable Markdown in <code>content/</code>, then becomes a versioned, navigable web page, a searchable JSON index, and a read-only MCP resource.</p>
-        <div class="docs-index-actions"><a href="/api/docs/index">JSON index ↗</a><a href="/agent-manifest.json">Agent manifest ↗</a><a href="/api/mcp">MCP manifest ↗</a></div>
+        <div class="docs-index-actions"><a href="/api/docs/index">JSON index ↗</a><a href="/api/">API reference ↗</a><a href="/agent-manifest.json">Agent manifest ↗</a><a href="/api/mcp">MCP manifest ↗</a></div>
+        <div class="docs-search-box"><label for="docs-search">Search this source <kbd>/</kbd></label><input id="docs-search" type="search" placeholder="Search pages, tags, and descriptions" autocomplete="off" aria-controls="docs-results" /><span data-doc-count aria-live="polite">5 pages</span></div>
       </section>
-      <section class="docs-index-section">
+      <p class="docs-search-empty" data-doc-empty hidden>No pages match that search.</p>
+      <div id="docs-results"><section class="docs-index-section">
       <div class="docs-index-section-heading"><span class="docs-kicker">Guides</span><span>3 pages</span></div>
       <div class="docs-index-grid">
-        <a class="docs-card" href="/docs/quickstart/">
+        <a class="docs-card" href="/docs/quickstart/" data-doc-card data-doc-search="Ship your first checkout Create a hosted checkout session with the smallest working request. quickstart checkout payments quickstart">
           <span class="docs-card-meta">current · en · quickstart</span>
           <strong>Ship your first checkout</strong>
           <p>Create a hosted checkout session with the smallest working request.</p>
           <span class="docs-card-arrow">Read page <span>→</span></span>
         </a>
-        <a class="docs-card" href="/docs/authentication/">
+        <a class="docs-card" href="/docs/authentication/" data-doc-card data-doc-search="Authentication and key rotation Keep API credentials server-side and rotate them without breaking active clients. authentication security keys tokens authentication">
           <span class="docs-card-meta">current · en · authentication</span>
           <strong>Authentication and key rotation</strong>
           <p>Keep API credentials server-side and rotate them without breaking active clients.</p>
           <span class="docs-card-arrow">Read page <span>→</span></span>
         </a>
-        <a class="docs-card" href="/docs/webhooks/">
+        <a class="docs-card" href="/docs/webhooks/" data-doc-card data-doc-search="Verify webhook events Verify signatures, preserve event ids, and acknowledge webhooks quickly. webhooks events security retries webhooks">
           <span class="docs-card-meta">current · en · webhooks</span>
           <strong>Verify webhook events</strong>
           <p>Verify signatures, preserve event ids, and acknowledge webhooks quickly.</p>
@@ -41,20 +43,21 @@
     <section class="docs-index-section">
       <div class="docs-index-section-heading"><span class="docs-kicker">Agent reference</span><span>2 pages</span></div>
       <div class="docs-index-grid">
-        <a class="docs-card" href="/docs/agent-context/">
+        <a class="docs-card" href="/docs/agent-context/" data-doc-card data-doc-search="Agent context and permissions Give coding agents linked context, explicit constraints, and a read-only default. agents mcp context permissions agent-context">
           <span class="docs-card-meta">current · en · agent-context</span>
           <strong>Agent context and permissions</strong>
           <p>Give coding agents linked context, explicit constraints, and a read-only default.</p>
           <span class="docs-card-arrow">Read page <span>→</span></span>
         </a>
-        <a class="docs-card" href="/docs/api-checkout/">
+        <a class="docs-card" href="/docs/api-checkout/" data-doc-card data-doc-search="Checkout API reference Create and expire checkout sessions with the API contract close to runnable examples. api checkout reference idempotency api-checkout">
           <span class="docs-card-meta">current · en · api-checkout</span>
           <strong>Checkout API reference</strong>
           <p>Create and expire checkout sessions with the API contract close to runnable examples.</p>
           <span class="docs-card-arrow">Read page <span>→</span></span>
         </a></div>
-    </section>
+    </section></div>
       <footer class="docs-footer"><span>Generated from docs.config.json and content/*.md</span><a href="/skill.md">Agent skill ↗</a></footer>
     </main>
+    <script src="/docs/docs.js"></script>
   </body>
 </html>

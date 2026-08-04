@@ -1,0 +1,106 @@
+{
+  "id": "createCheckoutSession",
+  "slug": "post-v1-checkout",
+  "method": "POST",
+  "path": "/v1/checkout",
+  "summary": "Create a checkout session",
+  "description": "Create a hosted checkout session for a price and redirect the customer to the returned URL.",
+  "tags": [
+    "Checkout"
+  ],
+  "servers": [
+    {
+      "url": "https://api.example.com",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "parameters": [
+    {
+      "name": "Idempotency-Key",
+      "in": "header",
+      "required": true,
+      "description": "A stable key for safely retrying the same checkout request.",
+      "example": "order_123_attempt_1",
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "requestBody": {
+    "contentType": "application/json",
+    "schema": {
+      "type": "object",
+      "required": [
+        "price",
+        "success_url"
+      ],
+      "properties": {
+        "price": {
+          "type": "string",
+          "description": "The price identifier to charge.",
+          "example": "price_basic"
+        },
+        "success_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Where to send the customer after checkout.",
+          "example": "https://example.com/success"
+        }
+      }
+    },
+    "example": {
+      "price": "price_basic",
+      "success_url": "https://example.com/success"
+    }
+  },
+  "responses": [
+    {
+      "status": "201",
+      "description": "Checkout session created.",
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "required": [
+          "id",
+          "url",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "cs_123"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://checkout.example.com/cs_123"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "complete",
+              "expired"
+            ],
+            "example": "open"
+          }
+        }
+      },
+      "example": {
+        "id": "cs_123",
+        "url": "https://checkout.example.com/cs_123",
+        "status": "open"
+      }
+    },
+    {
+      "status": "401",
+      "description": "The bearer token is missing or invalid."
+    }
+  ],
+  "source": "openapi/vessel.json"
+}

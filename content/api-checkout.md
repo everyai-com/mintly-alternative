@@ -27,3 +27,5 @@ Content-Type: application/json
 ```
 
 The response contains an `id`, `url`, and `status`. Store the id and use webhooks as the source of truth for completion.
+
+For the generated operation reference, request examples, and safe request preview, open the [API reference](/api/) or fetch the [createCheckoutSession operation](/api/openapi/operation?id=createCheckoutSession).

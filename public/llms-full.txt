@@ -14,7 +14,9 @@ Human docs are a readable, searchable web experience for guides, concepts, API r
 
 The agent index is a concise Markdown overview at /llms.txt plus a complete context export at /llms-full.txt. Each link should point to a source page with enough description for an agent to choose the right context.
 
-The MCP gateway now exposes read-only resources and typed tools through POST /api/mcp. The surface includes search_docs, get_page, list_examples, and audit_docs, plus vessel://agent-manifest, vessel://agent-permissions, and vessel://docs/<slug> resources. Mutating actions should be added only with an explicit permission model and a human approval path.
+The MCP gateway now exposes read-only resources and typed tools through POST /api/mcp. The surface includes search_docs, get_page, list_examples, audit_docs, list_api_operations, and get_api_operation, plus vessel://api/index, vessel://api/<operationId>, vessel://agent-manifest, vessel://agent-permissions, and vessel://docs/<slug> resources. Mutating actions should be added only with an explicit permission model and a human approval path.
+
+The API surface is generated from JSON, YAML, or YML contracts under /openapi. GET /api/ serves static reference pages and a safe request-preview playground. GET /api/openapi/index and GET /api/openapi/operation?id=<operationId> expose the same source as JSON. The playground creates curl/fetch snippets and shows documented mock responses without sending network requests or persisting bearer tokens.
 
 Repo-native agent artifacts such as AGENTS.md and SKILL.md can live beside the code they explain. This keeps instructions versioned, reviewable, and close to the implementation they constrain.
 
@@ -28,7 +30,7 @@ Repo-native agent artifacts such as AGENTS.md and SKILL.md can live beside the c
 
 ## Current demo
 
-The current front-end is a polished product surface demonstrating the complete platform shape: the three generated views, an editor, API playground, Assistant, BYOK provider settings, maintenance audit queue, insights, release controls, agent query interaction, GitHub connection path, open-source positioning, and live one-click deployment paths. The source compiler now indexes Markdown pages into a shared search/retrieval model, emits navigation/version/locale metadata plus an agent manifest, runs a docs quality audit, and the Cloudflare Worker and Netlify Functions expose docs search, page retrieval, audit, and read-only MCP tools. The maintenance scheduler, source/support adapters, hybrid editor, API linter, governance service, authentication service, and analytics backend are still being built.
+The current front-end is a polished product surface demonstrating the complete platform shape: the three generated views, an editor, API playground, Assistant, BYOK provider settings, maintenance audit queue, insights, release controls, agent query interaction, GitHub connection path, open-source positioning, and live one-click deployment paths. The source compiler now indexes Markdown and OpenAPI pages into shared generated artifacts, emits navigation/version/locale metadata plus an agent manifest, runs a docs quality audit, and the Cloudflare Worker and Netlify Functions expose docs search, page retrieval, OpenAPI operation retrieval, audit, and read-only MCP tools. The maintenance scheduler, source/support adapters, hybrid editor, API linter, governance service, authentication service, and analytics backend are still being built.
 
 ## AI Assistant
 
@@ -54,7 +56,7 @@ Vessel is intentionally targeting the feature categories users expect from a mod
 
 - Add MDX components, visual editing, and full version/locale route rendering on top of the current Markdown compiler.
 - Render MDX components, themes, versions, locales, and custom domains.
-- Generate API pages and an interactive OpenAPI/AsyncAPI playground.
+- Add AsyncAPI/GraphQL contract ingestion, richer API language tabs, and an authenticated proxy; OpenAPI JSON/YAML pages and the safe request-preview playground are already implemented.
 - Add MCP authentication, streaming, and richer generated machine context.
 - Add preview deployments, editor checks, redirects, changelogs, and webhooks.
 - Add Assistant retrieval, citations, feedback, search analytics, and agent telemetry.

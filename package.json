@@ -1,6 +1,6 @@
 {
   "name": "vessel-agent-docs",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "description": "An open-source, agent-ready documentation layer.",
   "type": "module",
@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "vite": "^7.0.0",
-    "wrangler": "^4.44.0"
+    "wrangler": "^4.44.0",
+    "yaml": "^2.9.0"
   }
 }

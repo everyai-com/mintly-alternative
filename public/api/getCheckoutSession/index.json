@@ -1,0 +1,80 @@
+{
+  "id": "getCheckoutSession",
+  "slug": "get-v1-checkout-session-id",
+  "method": "GET",
+  "path": "/v1/checkout/{session_id}",
+  "summary": "Get a checkout session",
+  "description": "Retrieve the current status of a checkout session.",
+  "tags": [
+    "Checkout"
+  ],
+  "servers": [
+    {
+      "url": "https://api.example.com",
+      "description": "Production"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "parameters": [
+    {
+      "name": "session_id",
+      "in": "path",
+      "required": true,
+      "description": "The checkout session identifier.",
+      "example": "cs_123",
+      "schema": {
+        "type": "string"
+      }
+    }
+  ],
+  "requestBody": null,
+  "responses": [
+    {
+      "status": "200",
+      "description": "Checkout session returned.",
+      "contentType": "application/json",
+      "schema": {
+        "type": "object",
+        "required": [
+          "id",
+          "url",
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "cs_123"
+          },
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://checkout.example.com/cs_123"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "open",
+              "complete",
+              "expired"
+            ],
+            "example": "open"
+          }
+        }
+      },
+      "example": {
+        "id": "cs_123",
+        "url": "https://checkout.example.com/cs_123",
+        "status": "complete"
+      }
+    },
+    {
+      "status": "404",
+      "description": "The session was not found."
+    }
+  ],
+  "source": "openapi/vessel.json"
+}

@@ -143,7 +143,7 @@ const suiteViews = {
     '<h3>Try the endpoint before you write a line.</h3>',
     '<p>Generate a reference from OpenAPI or AsyncAPI, then let readers send a safe, realistic request from the page.</p>',
     "</div>",
-    '<div class="suite-api__endpoint"><span class="api-method">POST</span><code>/v1/checkout</code><button class="api-run" type="button">Run request</button></div>',
+    '<div class="suite-api__endpoint"><span class="api-method">POST</span><code>/v1/checkout</code><a class="api-run" href="/api/">Open playground <span aria-hidden="true">↗</span></a></div>',
     '<div class="suite-api__columns">',
     '<div class="suite-api__panel"><div class="suite-api__panel-head"><span>Request</span><span>JSON</span></div><pre>{\n  <span class="code-key">"price"</span>: <span class="code-value">"price_basic"</span>,\n  <span class="code-key">"success_url"</span>: <span class="code-value">"/success"</span>\n}</pre></div>',
     '<div class="suite-api__panel"><div class="suite-api__panel-head"><span>Response</span><span>201</span></div><pre>{\n  <span class="code-key">"id"</span>: <span class="code-value">"cs_01J..."</span>,\n  <span class="code-key">"status"</span>: <span class="code-value">"open"</span>\n}</pre></div>',

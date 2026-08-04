@@ -43,9 +43,13 @@ jobs:
           node --check src/docs-parser.js
           node --check src/docs-audit.js
           node --check src/docs-core.js
+          node --check src/openapi-parser.js
+          node --check src/openapi-core.js
+          node --check public/api/api-explorer.js
           node --check scripts/build-docs.mjs
           node --check scripts/check-docs.mjs
           node --check netlify/functions/assistant.mjs
           node --check netlify/functions/docs.mjs
           node --check netlify/functions/github-install.mjs
           node --check netlify/functions/mcp.mjs
+          node --check netlify/functions/openapi.mjs
