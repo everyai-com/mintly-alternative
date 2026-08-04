@@ -14,6 +14,26 @@ This repository contains the product landing page, a Markdown source compiler, c
 
 See [FEATURES.md](FEATURES.md) for the Mintlify-class feature inventory, current demo coverage, and the implementation order for the open-source product.
 
+## Start in 60 seconds
+
+```sh
+git clone https://github.com/everyai-com/mintly-alternative.git
+cd mintly-alternative
+npm install
+npm run setup
+npm run dev
+```
+
+Open `http://localhost:5173`. `npm run setup` creates a local `.env` from `.env.example` without overwriting an existing file or adding secrets. See [GETTING_STARTED.md](GETTING_STARTED.md) for provider setup, deployment, and troubleshooting.
+
+Useful commands:
+
+```sh
+npm run doctor       # check Node, source files, generated artifacts, and config
+npm run verify       # build the site and run the complete test gate
+npm start            # alias for npm run dev
+```
+
 ## Run locally
 
     npm install
@@ -38,7 +58,7 @@ Put OpenAPI JSON, YAML, or YML contracts in [`openapi/`](openapi/). `npm run doc
 
 [![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/everyai-com/mintly-alternative)
 
-The Netlify flow connects the new site to the GitHub repository and prompts for the optional assistant environment variables. `USAGE.md` is included as the post-deploy setup guide.
+The Netlify flow connects the new site to the GitHub repository and prompts for the optional assistant environment variables. `GETTING_STARTED.md` is included as the short post-deploy setup guide; `USAGE.md` contains the complete environment and API reference.
 
 ### Cloudflare
 

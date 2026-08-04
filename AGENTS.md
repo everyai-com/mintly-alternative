@@ -10,7 +10,7 @@ Vessel is an open-source, static-first documentation layer for humans and AI age
 - src/styles.css contains all visual styling and responsive layout rules.
 - src/main.js contains surface switching, copy feedback, mobile navigation, the local agent query demo, provider settings, and the maintenance audit feed.
 - src/assistant-core.js contains the provider-neutral BYOK adapter shared by the Worker and Netlify Function.
-- docs.config.json, src/docs-parser.js, src/docs-core.js, src/docs-audit.js, src/openapi-parser.js, src/openapi-core.js, content/, openapi/, and scripts/ contain the source compiler, navigation model, quality audit, indexed search, page retrieval, OpenAPI reference, and MCP contract.
+- docs.config.json, src/docs-parser.js, src/docs-core.js, src/docs-audit.js, src/openapi-parser.js, src/openapi-core.js, content/, openapi/, and scripts/ contain the source compiler, navigation model, quality audit, indexed search, page retrieval, OpenAPI reference, MCP contract, and setup/doctor helpers.
 - src/worker.js is the Cloudflare Worker entrypoint for static assets, docs APIs, the read-only assistant gateway, and /health.
 - netlify/functions/docs.mjs, netlify/functions/openapi.mjs, and netlify/functions/mcp.mjs mirror the Worker docs/API/MCP contracts on Netlify.
 - public/api/ contains generated API JSON, operation pages, and the safe request-preview explorer; edit openapi/* instead of generated files.
@@ -22,8 +22,11 @@ Vessel is an open-source, static-first documentation layer for humans and AI age
 Use the existing scripts:
 
     npm install
+    npm run setup
+    npm run doctor
     npm run dev
     npm run build
+    npm run verify
     npm run preview
 
 npm run deploy builds the site and deploys the generated assets with Wrangler. It requires a logged-in Cloudflare account and a project name configured by the user.
@@ -42,4 +45,4 @@ npm run deploy builds the site and deploys the generated assets with Wrangler. I
 
 ## Verification
 
-Run npm run build, npm run docs:check, and npm test after UI, content, or configuration changes. Check the generated dist folder and test the key interactions in a browser: surface tabs, mobile navigation, copy buttons, provider deploy messaging, and the agent query form. The core tests cover both Worker and Netlify docs/MCP contracts.
+Run npm run build, npm run docs:check, and npm test after UI, content, or configuration changes. `npm run doctor -- --full` is the one-command fresh-clone confidence check. Check the generated dist folder and test the key interactions in a browser: surface tabs, mobile navigation, copy buttons, provider deploy messaging, and the agent query form. The core tests cover both Worker and Netlify docs/MCP contracts.

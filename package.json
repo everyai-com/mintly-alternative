@@ -4,13 +4,20 @@
   "private": true,
   "description": "An open-source, agent-ready documentation layer.",
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "vite",
+    "start": "npm run dev",
+    "setup": "node scripts/setup.mjs",
+    "doctor": "node scripts/doctor.mjs",
     "docs:build": "node scripts/build-docs.mjs",
     "docs:check:only": "node scripts/check-docs.mjs",
     "docs:check": "npm run docs:build && npm run docs:check:only",
     "build": "npm run docs:build && vite build",
     "test": "npm run docs:build && npm run docs:check:only && node --test tests/core.test.mjs",
+    "verify": "npm run build && npm test",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy"
   },

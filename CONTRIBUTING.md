@@ -6,11 +6,12 @@ Vessel is being built in public as an open-source, self-hostable documentation l
 
 ```sh
 npm install
+npm run setup
+npm run doctor
 npm run dev
-npm run build
 ```
 
-Before opening a pull request, run `npm run build`, the JavaScript syntax checks in `.github/workflows/ci.yml`, and `git diff --check`.
+Before opening a pull request, run `npm run verify`, the JavaScript syntax checks in `.github/workflows/ci.yml`, and `git diff --check`. `npm run doctor -- --full` is a convenient equivalent when diagnosing a fresh clone.
 
 ## Scope and safety
 
