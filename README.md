@@ -151,3 +151,19 @@ The product shape is informed by the current agent-doc primitives:
 ## License
 
 MIT. See LICENSE.
+
+---
+
+## Part of the everyai-com agent stack
+
+Open-source infrastructure for local-first, governed AI agents:
+
+- [distillory](https://github.com/everyai-com/distillory) — local-first memory engine that reasons at ingestion
+- [agentprofile](https://github.com/everyai-com/agentprofile) — one agent identity — skills, credentials, memory — across every tool
+- [agent-ready](https://github.com/everyai-com/agent-ready) — turn any app into an MCP server + API + CLI, safe by default
+- [primer](https://github.com/everyai-com/primer) — live business context injected into any agent
+- [plainsync](https://github.com/everyai-com/plainsync) — local-first Markdown workspace for humans + agents
+- [argus](https://github.com/everyai-com/argus) — cloud-native software verification with parallel browser testing
+- [talltrack](https://github.com/everyai-com/talltrack) — sales calls in, publishable content out
+
+Built by [Phanindra Reddy](https://github.com/everyai-com) · [magicteams.ai](https://magicteams.ai)
