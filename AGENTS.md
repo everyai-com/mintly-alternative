@@ -46,3 +46,22 @@ npm run deploy builds the site and deploys the generated assets with Wrangler. I
 ## Verification
 
 Run npm run build, npm run docs:check, and npm test after UI, content, or configuration changes. `npm run doctor -- --full` is the one-command fresh-clone confidence check. Check the generated dist folder and test the key interactions in a browser: surface tabs, mobile navigation, copy buttons, provider deploy messaging, and the agent query form. The core tests cover both Worker and Netlify docs/MCP contracts.
+
+## Harness / agent discovery
+
+Mintly already publishes machine-readable agent surfaces. When the contract
+changes, keep them in sync:
+
+- public/agent-manifest.json (plus /agent-manifest.json and /.well-known/agent-manifest.json) — the Vessel agent contract: pages, API operations, surfaces, capabilities, constraints.
+- public/agent-permissions.json — the explicit read-only permission model.
+- public/skill.md — the step-by-step workflow for coding and support agents.
+- public/llms.txt and public/llms-full.txt — the human+agent index.
+
+The MCP surface is a **read-only JSON-RPC endpoint at POST /api/mcp**
+(initialize, tools/list, tools/call, resources/list, resources/read), mirrored on
+Netlify at netlify/functions/mcp.mjs. It is intentionally JSON-RPC, not a
+streamable-HTTP MCP transport — document it as such and do not claim a standard
+MCP transport until one exists. Tools: search_docs, get_page, list_examples,
+audit_docs, list_api_operations, get_api_operation; resources under vessel://…
+(api index, per-operation, agent-manifest, agent-permissions, docs/<slug>).
+Repository writes require a separate approval boundary.
